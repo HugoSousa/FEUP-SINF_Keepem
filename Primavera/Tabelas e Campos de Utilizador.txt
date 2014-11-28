@@ -1,1 +1,16 @@
-TODO escrever aqui todas as tabelas e campos que criamos. Sempre que mudarmos atualizamos aqui
+-Família
+--CDU_Desconto
+
+-Clientes
+--CDU_idCartaoCliente
+--CDU_Password
+--CDU_username
+
+-TDU_CartaoCliente
+--CDU_idCartaoCliente
+--CDU_Pontos
+
+-TDU_TipoDesconto
+--CDU_idTipoDesconto ( e so a chave da tabela)
+--CDU_Desconto
+--CDU_Pontos
