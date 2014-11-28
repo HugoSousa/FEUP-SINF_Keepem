@@ -1,1 +1,10 @@
-TODO escrever aqui todas as tabelas e campos que criamos. Sempre que mudarmos atualizamos aqui
+Nome da Empresa: TESTE123
+
+Cliente:
+	CDU_Email(nvarchar, 20);
+	CDU_Password(nvarchar, 20);
+	CDU_idCartaoCliente(nvarchar, 20);
+
+TDU_CartaoCliente:
+	CDU_idCartaoCliente(nvarchar, 20);
+	CDU_Pontos(int);
