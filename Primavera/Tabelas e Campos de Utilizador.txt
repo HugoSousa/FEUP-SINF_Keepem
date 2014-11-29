@@ -1,14 +1,16 @@
+Nome da Empresa: TESTE123
+
 -Família
 --CDU_Desconto
 
--Clientes
---CDU_idCartaoCliente
---CDU_Password
---CDU_username
+-Cliente
+--CDU_idCartaoCliente(nvarchar, 20);
+--CDU_Password(nvarchar, 20);
+--CDU_Email(nvarchar, 20);
 
 -TDU_CartaoCliente
---CDU_idCartaoCliente
---CDU_Pontos
+--CDU_idCartaoCliente(-nvarchar, 20);
+--CDU_Pontos(int);
 
 -TDU_TipoDesconto
 --CDU_idTipoDesconto ( e so a chave da tabela)
