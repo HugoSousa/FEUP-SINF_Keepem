@@ -25,15 +25,15 @@
 
     <div class="container">
 
-        <div class="page-header">
+        <div class="page-header" style="margin-bottom:20%">
             <h1>Sistema de Fidelização de Clientes</h1>
         </div>
-
-        <h2>Por favor selecione uma opção:</h2>
+		
+		
+		
+        <button type="submit" id="clienteExistente" class="btn btn-lg btn-primary btn-block">Entrar</button>
         <br>
-        <button type="submit" id="clienteExistente" class="btn btn-lg btn-primary btn-block">Cliente Existente</button>
-        <br>
-        <button type="submit" id="novoCliente" class="btn btn-lg btn-primary btn-block">Novo Cliente</button>
+        <button type="submit" id="novoCliente" class="btn btn-lg btn-primary btn-block">Registar</button>
 
     </div>
 </body>
