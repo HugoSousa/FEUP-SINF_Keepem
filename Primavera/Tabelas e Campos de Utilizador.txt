@@ -1,4 +1,4 @@
-Nome da Empresa: TESTE123
+﻿Nome da Empresa: TESTE123
 
 -Família
 --CDU_Desconto
@@ -9,8 +9,12 @@ Nome da Empresa: TESTE123
 --CDU_Email(nvarchar, 20);
 
 -TDU_CartaoCliente
---CDU_idCartaoCliente(-nvarchar, 20);
+--CDU_idCartaoCliente(nvarchar, 20);
+-TDU_TransacaoPontos
+--CDU_idTransacaoPontos(nvarchar, 10);
+--CDU_idCartaoCliente(nvarchar, 10);
 --CDU_Pontos(int);
+--CDU_dataExpiracao(datetime);   | estou a usar 1 ano de validade após fatura
 
 -TDU_TipoDesconto
 --CDU_idTipoDesconto ( e so a chave da tabela)

@@ -1,12 +1,3 @@
-VERSION 1.0 CLASS
-BEGIN
-  MultiUse = -1  'True
-END
-Attribute VB_Name = "EditorVendas"
-Attribute VB_GlobalNameSpace = False
-Attribute VB_Creatable = False
-Attribute VB_PredeclaredId = True
-Attribute VB_Exposed = True
   
     Dim discountPointsUsed As Integer
     
@@ -25,13 +16,15 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
     
     
     If Me.DocumentoVenda.TipoDoc = "FA" Then
-        discountPointsUsed = 0
+        
         strSQL = vbNullString
         
-        strSQL = "SELECT Clientes.CDU_idCartaoCliente, TDU_CartaoCliente.CDU_Pontos FROM Clientes, TDU_CartaoCliente "
+        strSQL = "SELECT Clientes.CDU_idCartaoCliente, SUM(TDU_TransacaoPontos.CDU_Pontos) As Pontos FROM TDU_TransacaoPontos, Clientes "
         strSQL = strSQL & "WHERE Cliente = '"
         strSQL = strSQL & Me.DocumentoVenda.Entidade
-        strSQL = strSQL & "' AND Clientes.CDU_idCartaoCliente = TDU_CartaoCliente.CDU_idCartaoCliente"
+        strSQL = strSQL & "' AND Clientes.CDU_idCartaoCliente = TDU_TransacaoPontos.CDU_idCartaoCliente "
+        strSQL = strSQL & "AND TDU_TransacaoPontos.CDU_DataExpiracao >= CURRENT_TIMESTAMP "
+        strSQL = strSQL & "GROUP BY Clientes.CDU_idCartaoCliente"
         
         Set pontosClienteQuery = Aplicacao.BSO.Consulta(strSQL)
         
@@ -42,7 +35,7 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
             ' PlataformaPRIMAVERA.Dialogos.MostraAviso "SOU FIDELIZADO"
             
             
-            ' verificar se este cliente √© fidelizado (tem idCartao != null ?)
+            ' verificar se este cliente È fidelizado (tem idCartao != null ?)
             
             
             strSQL = vbNullString
@@ -80,7 +73,7 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
                 strSQL = strSQL & line
                 strSQL = strSQL & "'), 0)"
                 
-                ' retorna true se tem desconto, e false se n√£o tem
+                ' retorna true se tem desconto, e false se n„o tem
                 Set familiaArtigo = Aplicacao.BSO.Consulta(strSQL)
                 
                 
@@ -113,7 +106,7 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
             ' PlataformaPRIMAVERA.Dialogos.MostraAviso "NO FINAL poupa" + CStr(totalDiscount)
 
             ' percorrer novamente as linhas
-            ' para cada linha em artigo com desconto no cart√£o, editar o campo desconto do artigo e somar a percentagem adequeada
+            ' para cada linha em artigo com desconto no cart„o, editar o campo desconto do artigo e somar a percentagem adequeada
             ' remover pontos usados do cartao
             
                 lineCounter = 0
@@ -192,7 +185,6 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
             UserForm1.ComboBox1.ColumnCount = 2
             UserForm1.ComboBox1.List = listaComboBox
             UserForm1.ComboBox1.BoundColumn = 1
-            UserForm1.ComboBox1.ListIndex = 0
             UserForm1.Show
              
             If UserForm1.ComboBox1.SelText <> " - " Then
@@ -202,12 +194,10 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
                 If UserForm1.ComboBox1.ListIndex = -1 Then
                     descontoPercentagem = 0
                 Else
-                    If (UserForm1.ComboBox1.List(UserForm1.ComboBox1.ListIndex, 0) <> " - ") Then
-                        pontosArray = Split(UserForm1.ComboBox1.List(UserForm1.ComboBox1.ListIndex, 0), " ")
-                        descontoPercentagem = pontosArray(0)
-                        pontosUsadosArray = Split(UserForm1.ComboBox1.List(UserForm1.ComboBox1.ListIndex, 1), " ")
-                        discountPointsUsed = pontosUsadosArray(0)
-                    End If
+                    pontosArray = Split(UserForm1.ComboBox1.List(UserForm1.ComboBox1.ListIndex, 0), " ")
+                    descontoPercentagem = pontosArray(0)
+                    pontosUsadosArray = Split(UserForm1.ComboBox1.List(UserForm1.ComboBox1.ListIndex, 1), " ")
+                    discountPointsUsed = pontosUsadosArray(0)
                     
                 End If
                 
@@ -232,11 +222,16 @@ Private Sub EditorVendas_DepoisDeGravar(Filial As String, Serie As String, Tipo 
    Dim TotalPreco As Double
     Dim strSQL As String
     Dim chave As StdBECamposChave
-    Dim PontosAtuais As Integer
-    Dim NovosPontos As Integer
+    Dim removedPoints As Integer
+    Dim leftRemovePoints As Integer
+    Dim pontos As StdBELista
+    Dim novosPontos As Integer
+    Dim cartaoCliente As Integer
     
     Set chave = Nothing
-      
+    removedPoints = 0
+    leftRemovePoints = discountPointsUsed
+    
     If Me.DocumentoVenda.TipoDoc = "FA" Then
     
         strSQL = vbNullString
@@ -250,19 +245,85 @@ Private Sub EditorVendas_DepoisDeGravar(Filial As String, Serie As String, Tipo 
       End If
         If Not clienteFidelizado.NoFim Then
            ' Cliente fidelizado
-
-            Set chave = New StdBECamposChave
-            chave.AddCampoChave "CDU_idCartaoCliente", clienteFidelizado.Valor(0)
- 
-            PontosAtuais = CInt(clienteFidelizado.Valor(1))
-            NovosPontos = PontosAtuais + Int(Me.DocumentoVenda.TotalDocumento) - discountPointsUsed
+                
+           cartaoCliente = Int(clienteFidelizado.Valor(0))
+                
+            strSQL = vbNullString
+        
+            strSQL = "SELECT TDU_TransacaoPontos.CDU_idTransacaoPontos, TDU_TransacaoPontos.CDU_Pontos As Pontos FROM TDU_TransacaoPontos, Clientes "
+            strSQL = strSQL & "WHERE Cliente = '"
+            strSQL = strSQL & Me.DocumentoVenda.Entidade
+            strSQL = strSQL & "' AND Clientes.CDU_idCartaoCliente = TDU_TransacaoPontos.CDU_idCartaoCliente "
+            ' strSQL = strSQL & "AND TDU_TransacaoPontos.CDU_DataExpiracao >= CURRENT_TIMESTAMP "
+            strSQL = strSQL & "ORDER BY CDU_DataExpiracao"
             
-            Aplicacao.BSO.TabelasUtilizador.ActualizaValorAtributo "TDU_CartaoCliente", chave, "CDU_Pontos", NovosPontos
-
+            Set pontos = Aplicacao.BSO.Consulta(strSQL)
+            
+            ' remove os pontos usados
+            Do While (removedPoints < discountPointsUsed)
+                pontosColuna = pontos.Valor(1)
+                
+                Set chave = New StdBECamposChave
+                chave.AddCampoChave "CDU_idTransacaoPontos", pontos.Valor(0)
+                
+                If (pontosColuna < leftRemovePoints) Then
+                    pontos.Seguinte
+                    Aplicacao.BSO.TabelasUtilizador.Remove "TDU_TransacaoPontos", chave
+                    removedPoints = removedPoints + pontosColuna
+                    leftRemovePoints = leftRemovePoints - pontosColuna
+                    
+                ElseIf (pontosColuna = leftRemovePoints) Then
+                    Aplicacao.BSO.TabelasUtilizador.Remove "TDU_TransacaoPontos", chave
+                    removedPoints = removedPoints + pontosColuna
+                    leftRemovePoints = leftRemovePoints - pontosColuna
+                    Exit Do
+                Else
+                    ' se coluna tem + pontos que o necessarios remover, editar a coluna com diferenca de pontos
+                
+                    excessPoints = pontosColuna - leftRemovePoints
+                    
+                    removedPoints = discountPointsUsed
+                    leftRemovePoints = 0
+                    
+                    Aplicacao.BSO.TabelasUtilizador.ActualizaValorAtributo "TDU_TransacaoPontos", chave, "CDU_Pontos", excessPoints
+                    
+                    Exit Do
+                End If
+                
+            Loop
+            
+            
+            novosPontos = Int(Me.DocumentoVenda.TotalDocumento)
+            
+            ' registar novos pontos acumulados
+            If (novosPontos > 0) Then
+                Dim novoIdTransacaoPontos As Integer
+                Dim novaTransacaoPontos As StdBERegistoUtil
+                Set novaTransacaoPontos = New StdBERegistoUtil
+                
+                strSQL = vbNullString
+                ' buscar ultimo id das transacoes e incrementar 1
+                strSQL = "SELECT CDU_idTransacaoPontos FROM TDU_TransacaoPontos ORDER BY CDU_idTransacaoPontos DESC"
+                Set transacoesQuery = Aplicacao.BSO.Consulta(strSQL)
+                If Not transacoesQuery.NoFim Then
+                    novoIdTransacaoPontos = Int(transacoesQuery.Valor(0)) + 1
+                Else
+                    novoIdTransacaoPontos = 1
+                End If
+                    
+                today = Now()
+                nextYear = DateAdd("yyyy", 1, today)
+                    
+                novaTransacaoPontos.Campos("CDU_idTransacaoPontos").Valor = novoIdTransacaoPontos
+                novaTransacaoPontos.Campos("CDU_Pontos").Valor = novosPontos
+                novaTransacaoPontos.Campos("CDU_idCartaoCliente").Valor = cartaoCliente
+                novaTransacaoPontos.Campos("CDU_DataExpiracao").Valor = nextYear
+                Aplicacao.BSO.TabelasUtilizador.Actualiza "TDU_TransacaoPontos", novaTransacaoPontos
+            End If
+            
         Else
           ' Cliente nao fidelizado
         End If
         
 End Sub
-
 
