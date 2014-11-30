@@ -50,5 +50,22 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public int Pontos
+        {
+            get;
+            set;
+        }
+
+        public string DataProximaExpiracao
+        {
+            get;
+            set;
+        }
+
+        public int PontosProximaExpiracao
+        {
+            get;
+            set;
+        }
     }
 }

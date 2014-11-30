@@ -31,13 +31,13 @@
 				
 				$('#descontos_table').dataTable({
 					"searching": false,
-					"ordering": false
+					"ordering": false,
+					"columns": [
+						{ "data": "pontos" },
+						{ "data": "desconto" }
+					  ]
 				});
 				
-				$('#dropdown_list li a').on('click', function() {
-					console.log("FIRED");
-					$('#dropdown_title').html($(this).html());
-				});
 			});
 			
 

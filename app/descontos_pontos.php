@@ -1,8 +1,9 @@
 <?php include("navbar.php"); ?>
+<script src="js/descontos_pontos.js"></script>
 
 <div class="jumbotron center-middle" style="margin-bottom: 50px">
-  <p class="text-center">Tem X pontos</p>
-  <div class="text-center"><small>dos quais Y expiram em Z</small></div>
+  <p class="text-center">Tem <span id="pontos_cliente">X</span> pontos</p>
+  <div class="text-center"><small>dos quais <span id="pontos_expiracao_cliente">Y</span> expiram em <span id="data_expiracao_cliente">Z</</small></div>
 </div>
 
 <div class="table-responsive center-middle">
@@ -14,20 +15,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="success">
-			<td>100</td>
-			<td>5%</td>
-		</tr>
-		<tr class="success">
-			<td>200</td>
-			<td>12%</td>
-		</tr>
-		<tr class="warning">
-			<td>300</td>
-			<td>18%</td>
-		</tr>
+
 		
-		</tbody>
+	</tbody>
   </table>
 </div>
 
