@@ -50,7 +50,18 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
- 
+
+        public double DescontoFidelizacao
+        {
+            get;
+            set;
+        }
+
+        public int PontosUsados
+        {
+            get;
+            set;
+        }
 
     }
 }

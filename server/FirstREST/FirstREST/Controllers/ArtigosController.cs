@@ -15,14 +15,15 @@ namespace FirstREST.Controllers
     {
         //
         // GET: /Artigos/
-
+        
         public IEnumerable<Lib_Primavera.Model.Artigo> Get()
         {
             return Lib_Primavera.Comercial.ListaArtigos();
         }
+        
 
-
-        // GET api/artigo/5    
+        /*
+        // GET api/artigos/5    
         public Artigo Get(string id)
         {
             Lib_Primavera.Model.Artigo artigo = Lib_Primavera.Comercial.GetArtigo(id);
@@ -36,7 +37,15 @@ namespace FirstREST.Controllers
                 return artigo;
             }
         }
+        */ 
 
+        // GET api/artigos/familia   
+        public IEnumerable<Lib_Primavera.Model.Artigo> Get(string id)
+        {
+            string familia = id;
+            return Lib_Primavera.Comercial.GetArtigosDeFamilia(familia);
+        }
+        
     }
 }
 

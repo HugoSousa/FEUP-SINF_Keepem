@@ -286,8 +286,11 @@
     <Compile Include="Controllers\ArtigosController.cs" />
     <Compile Include="Controllers\CartoesClientesController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\DescontosDiretosController.cs" />
+    <Compile Include="Controllers\DescontosPontosController.cs" />
     <Compile Include="Controllers\DocCompraController.cs" />
     <Compile Include="Controllers\DocVendaController.cs" />
+    <Compile Include="Controllers\HistoricoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -297,8 +300,10 @@
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />
     <Compile Include="Lib_Primavera\Model\CartaoCliente.cs" />
     <Compile Include="Lib_Primavera\Model\Cliente.cs" />
+    <Compile Include="Lib_Primavera\Model\Desconto.cs" />
     <Compile Include="Lib_Primavera\Model\DocCompra.cs" />
     <Compile Include="Lib_Primavera\Model\DocVenda.cs" />
+    <Compile Include="Lib_Primavera\Model\Familia.cs" />
     <Compile Include="Lib_Primavera\Model\LinhaDocCompra.cs" />
     <Compile Include="Lib_Primavera\Model\LinhaDocVenda.cs" />
     <Compile Include="Lib_Primavera\Model\RespostaErro.cs" />
@@ -431,6 +436,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\DescontosPontos\" />
+    <Folder Include="Views\Historico\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

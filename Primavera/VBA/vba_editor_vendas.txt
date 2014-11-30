@@ -107,7 +107,6 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
 
             ' percorrer novamente as linhas
             ' para cada linha em artigo com desconto no cartão, editar o campo desconto do artigo e somar a percentagem adequeada
-            ' remover pontos usados do cartao
             
                 lineCounter = 0
                 
@@ -133,6 +132,7 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
                         descontoAtual = Me.DocumentoVenda.Linhas(lineCounter).Desconto1
                         descontoNovo = descontoAtual + ValorDesconto
                         Me.DocumentoVenda.Linhas(lineCounter).Desconto1 = descontoNovo
+                        Me.DocumentoVenda.CamposUtil.Item("CDU_DescontoFidelizacao") = descontoNovo
                         
                         ' PlataformaPRIMAVERA.Dialogos.MostraAviso "DESCONTO FINALISSIMO: " + CStr(Me.DocumentoVenda.Linhas(lineCounter).Desconto1)
                     End If
@@ -202,8 +202,10 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
                 End If
                 
                 ' PlataformaPRIMAVERA.Dialogos.MostraAviso Int(descontoPercentagem)
-                Me.DocumentoVenda.DescEntidade = Me.DocumentoVenda.DescEntidade + Int(descontoPercentagem)
-                 
+                desc = Me.DocumentoVenda.DescEntidade + Int(descontoPercentagem)
+                Me.DocumentoVenda.DescEntidade = desc
+                Me.DocumentoVenda.CamposUtil.Item("CDU_DescontoFidelizacao") = desc
+                
             End If
             
             
@@ -245,6 +247,8 @@ Private Sub EditorVendas_DepoisDeGravar(Filial As String, Serie As String, Tipo 
       End If
         If Not clienteFidelizado.NoFim Then
            ' Cliente fidelizado
+                
+           Me.DocumentoVenda.CamposUtil.Item("CDU_PontosUsados") = discountPointsUsed
                 
            cartaoCliente = Int(clienteFidelizado.Valor(0))
                 

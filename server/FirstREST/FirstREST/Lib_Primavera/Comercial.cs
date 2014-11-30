@@ -28,7 +28,7 @@ namespace FirstREST.Lib_Primavera
             List<Model.CartaoCliente> listCartoesClientes = new List<Model.CartaoCliente>();
 
 
-            if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
                 objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_CartaoCliente");
 
@@ -58,7 +58,7 @@ namespace FirstREST.Lib_Primavera
             Model.CartaoCliente cli = null;
 
 
-            if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
                 objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_CartaoCliente");
 
@@ -99,7 +99,7 @@ namespace FirstREST.Lib_Primavera
             List<Model.CartaoCliente> listCartoesClientes = new List<Model.CartaoCliente>();
 
 
-            if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
                 objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_CartaoCliente");
 
@@ -147,7 +147,7 @@ namespace FirstREST.Lib_Primavera
             List<Model.Cliente> listClientes = new List<Model.Cliente>();
 
 
-            if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
                 objList = PriEngine.Engine.Consulta("SELECT *, NumContrib as NumContribuinte FROM CLIENTES");
 
@@ -182,7 +182,7 @@ namespace FirstREST.Lib_Primavera
             Model.Cliente cli = null;
 
 
-            if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
                 objList = PriEngine.Engine.Consulta("SELECT *, NumContrib as NumContribuinte FROM CLIENTES");
 
@@ -230,7 +230,7 @@ namespace FirstREST.Lib_Primavera
             try
             {
 
-                if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+                if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
                 {
 
 
@@ -297,7 +297,7 @@ namespace FirstREST.Lib_Primavera
             try
             {
 
-                if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+                if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
                 {
                     if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == false)
                     {
@@ -344,7 +344,7 @@ namespace FirstREST.Lib_Primavera
 
             try
             {
-                if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+                if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
                 {
                     objList = PriEngine.Engine.Consulta("SELECT *, NumContrib as NumContribuinte FROM CLIENTES");
 
@@ -417,7 +417,7 @@ namespace FirstREST.Lib_Primavera
             GcpBEArtigo objArtigo = new GcpBEArtigo();
             Model.Artigo myArt = new Model.Artigo();
 
-            if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
 
                 if (PriEngine.Engine.Comercial.Artigos.Existe(codArtigo) == false)
@@ -441,6 +441,42 @@ namespace FirstREST.Lib_Primavera
 
         }
 
+        public static List<Model.Artigo> GetArtigosDeFamilia(string familia)
+        {
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+
+            Model.Artigo art = new Model.Artigo();
+            List<Model.Artigo> listArts = new List<Model.Artigo>();
+
+
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT * From Artigo WHERE Familia ='" + familia + "'");
+
+                while (!objList.NoFim())
+                {
+                    art = new Model.Artigo();
+                    art.CodArtigo = objList.Valor("Artigo");
+                    art.DescArtigo = objList.Valor("Descricao");
+
+                    listArts.Add(art);
+                    objList.Seguinte();
+                }
+
+                return listArts;
+
+            }
+            else
+            {
+                return null;
+
+            }
+
+        }
+
+
         public static List<Model.Artigo> ListaArtigos()
         {
             ErpBS objMotor = new ErpBS();
@@ -451,7 +487,7 @@ namespace FirstREST.Lib_Primavera
             List<Model.Artigo> listArts = new List<Model.Artigo>();
 
 
-            if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
                 objList = PriEngine.Engine.Consulta("SELECT * From Artigo");
 
@@ -564,7 +600,7 @@ namespace FirstREST.Lib_Primavera
             Model.LinhaDocCompra lindc = new Model.LinhaDocCompra();
             List<Model.LinhaDocCompra> listlindc = new List<Model.LinhaDocCompra>(); 
 
-            if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
                 objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras where TipoDoc='VGR'");
                 while (!objListCab.NoFim())
@@ -624,7 +660,7 @@ namespace FirstREST.Lib_Primavera
 
             try
             {
-                if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+                if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
                 {
                     // Atribui valores ao cabecalho do doc
                     //myEnc.set_DataDoc(dv.Data);
@@ -687,7 +723,7 @@ namespace FirstREST.Lib_Primavera
             
             try
             {
-                if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+                if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
                 {
                     // Atribui valores ao cabecalho do doc
                     //myEnc.set_DataDoc(dv.Data);
@@ -744,9 +780,9 @@ namespace FirstREST.Lib_Primavera
             List<Model.LinhaDocVenda> listlindv = new
             List<Model.LinhaDocVenda>();
 
-            if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
-                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL'");
+                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie, CDU_DescontoFidelizacao, CDU_PontosUsados From CabecDoc where TipoDoc='FA'");
                 while (!objListCab.NoFim())
                 {
                     dv = new Model.DocVenda();
@@ -756,7 +792,12 @@ namespace FirstREST.Lib_Primavera
                     dv.Data = objListCab.Valor("Data");
                     dv.TotalMerc = objListCab.Valor("TotalMerc");
                     dv.Serie = objListCab.Valor("Serie");
-                    objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
+                    dv.DescontoFidelizacao = objListCab.Valor("CDU_DescontoFidelizacao");
+                    dv.PontosUsados = objListCab.Valor("CDU_PontosUsados");
+
+
+
+                    objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido, CDU_DescontoFidelizacao from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
                     listlindv = new List<Model.LinhaDocVenda>();
 
                     while (!objListLin.NoFim())
@@ -771,6 +812,7 @@ namespace FirstREST.Lib_Primavera
                         lindv.PrecoUnitario = objListLin.Valor("PrecUnit");
                         lindv.TotalILiquido = objListLin.Valor("TotalILiquido");
                         lindv.TotalLiquido = objListLin.Valor("PrecoLiquido");
+                        lindv.DescontoFidelizacao = objListLin.Valor("CDU_DescontoFidelizacao");
 
                         listlindv.Add(lindv);
                         objListLin.Seguinte();
@@ -795,7 +837,7 @@ namespace FirstREST.Lib_Primavera
             Model.LinhaDocVenda lindv = new Model.LinhaDocVenda();
             List<Model.LinhaDocVenda> listlindv = new List<Model.LinhaDocVenda>();
 
-            if (PriEngine.InitializeCompany("TESTE123", "", "") == true)
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
                  
                 string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL' and NumDoc='" + numdoc + "'";
@@ -830,6 +872,73 @@ namespace FirstREST.Lib_Primavera
                 return dv;
             }
             return null;
+        }
+
+
+    //------------------------------------ LISTA FAMILIAS COM DESCONTO DIRETO
+
+        public static List<Model.Familia> ListaFamiliasDescontoDireto()
+        {
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+
+            Model.Familia fam = new Model.Familia();
+            List<Model.Familia> listFamilias = new List<Model.Familia>();
+
+
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT Familia, CDU_Desconto FROM Familias WHERE Familias.CDU_Desconto <> 0");
+
+                while (!objList.NoFim())
+                {
+                    fam = new Model.Familia();
+                    fam.NomeFamilia = objList.Valor("Familia");
+                    fam.DescFamilia = objList.Valor("CDU_Desconto");
+
+                    listFamilias.Add(fam);
+                    objList.Seguinte();
+
+                }
+
+                return listFamilias;
+            }
+            else
+                return null;
+        }
+
+        //------------------------------------ LISTA DESCONTOS COM PONTOS
+
+        public static List<Model.Desconto> ListaDescontosPontos()
+        {
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+
+            Model.Desconto desc = new Model.Desconto();
+            List<Model.Desconto> listDescontos = new List<Model.Desconto>();
+
+
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_TipoDesconto");
+
+                while (!objList.NoFim())
+                {
+                    desc = new Model.Desconto();
+                    desc.pontos = objList.Valor("CDU_Pontos");
+                    desc.desconto = objList.Valor("CDU_Desconto");
+
+                    listDescontos.Add(desc);
+                    objList.Seguinte();
+
+                }
+
+                return listDescontos;
+            }
+            else
+                return null;
         }
 
     }

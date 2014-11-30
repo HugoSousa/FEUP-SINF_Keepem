@@ -22,7 +22,7 @@
 	  
 	  <div class="col-sm-6 col-md-2">
 		<div class="thumbnail">
-		  <img src="img/Koala.jpg" alt="...">
+		  <img src="img/no_image.jpg" alt="...">
 		  <div class="caption">
 			<h4>Produto blablablablall adsad aeqeq </h4>
 			<span><del>5.40€</del></span>
