@@ -29,11 +29,9 @@
             <h1>Sistema de Fidelização de Clientes</h1>
         </div>
 		
-		
-		
-        <button type="submit" id="clienteExistente" class="btn btn-lg btn-primary btn-block">Entrar</button>
+        <button type="submit" id="clienteExistente" class="btn btn-lg btn-default btn-block">Entrar</button>
         <br>
-        <button type="submit" id="novoCliente" class="btn btn-lg btn-primary btn-block">Registar</button>
+        <button type="submit" id="novoCliente" class="btn btn-lg btn-default btn-block">Registar</button>
 
     </div>
 </body>

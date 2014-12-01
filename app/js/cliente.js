@@ -62,10 +62,6 @@ $(document).ready(function () {
             }
         });
     });
-    
-    $("#logout").click(function () {
-        window.location.href = "logout.php";
-    });
 
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
