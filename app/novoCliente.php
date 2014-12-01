@@ -42,7 +42,7 @@
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" name="CDU_Password" id="inputPassword" class="form-control" placeholder="Password">
             <br>
-            <button type="submit" id="newClientButton" class="btn btn-lg btn-primary btn-block">Criar Cliente</button>
+            <button type="submit" id="newClientButton" class="btn btn-lg btn-default btn-block">Criar Cliente</button>
         </form>
 
     </div>
