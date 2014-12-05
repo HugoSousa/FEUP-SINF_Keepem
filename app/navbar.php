@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/dataTables.bootstrap.css">
 
-    <link rel="stylesheet" href="../css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery.dataTables.min.js"></script>

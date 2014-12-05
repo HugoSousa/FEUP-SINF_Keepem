@@ -1,4 +1,3 @@
-
 var codCliente = getParameterByName("codCliente");
 var pontosCliente;
 
