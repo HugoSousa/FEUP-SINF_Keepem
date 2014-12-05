@@ -1,84 +1,150 @@
 <?php
+$result; 
+
 if (isset($_GET['do']) && strcmp($_GET['do'],"send") == 0)
- {
+{
 
-       $result; 
-       $from = $_POST['from'];
-       $text = $_POST['content'];
-       $emess = $text;
-       $to = $_POST['to'];
-     
-       $ehead = "From: ".$from."\r\n";
-       $subj = "%CLIENTNAME% aproveita as promoÇões deste mês!";
-       $mailsend=mail("$to",htmlspecialchars("$subj"),htmlspecialchars("$emess"),"$ehead"."\nContent-Type: text/html; charset=UTF-8\n");
-       $message = "Email was sent.";
-       $result['result'] = $mailsend;
-       unset($_GET['do']);
-      echo json_encode($result);
+    $from = $_POST['from'];
+    $text = $_POST['content'];
+    $emess = $text;
+    $to = "ei11084@fe.up.pt";
 
- }
-    else {
-?>
+    $ehead = "From: ".$from."\r\n";
+    $subj = "<CLIENTNAME> aproveita as promoÇões deste mês!";
+    $mailsend=mail("$to",htmlspecialchars("$subj"),htmlspecialchars("$emess"),"$ehead"."\nContent-Type: text/html; charset=UTF-8\n");
+    $message = "Email was sent.";
+    $result['result'] = $mailsend;
+    unset($_GET['do']);
+    echo json_encode($result); 
+
+}
+else { // missing parameters
+?><!DOCTYPE html>
+<html >
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+
+        <title>Envio de NewsLetter</title>
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.js"></script>
+        <script src="/js/jquery.dataTables.min.js"></script>
+        <script src="/js/dataTables.bootstrap.js"></script>
+         <script>
+        $(document).ready(function () {
+             $('.dropdown-toggle')
+            /*
+            $('#historico_table').dataTable({
+                "searching": false,
+                'aoColumnDefs': [{
+                    'bSortable': false,
+                    'aTargets': ['nosort']
+    }]
+            });
+
+            $('#descontos_table').dataTable({
+                "searching": false,
+                "ordering": false,
+                "columns": [
+                    {
+                        "data": "pontos"
+                    },
+                    {
+                        "data": "desconto"
+                    }
+       ]
+            });
+            */
 
 
-<html>
-<body>
-<form action="email_form.php?do=send" method="POST">
-<p>* Required fields</p>
-<?php
-   if (isset($message) && strcmp($message, "") != 0) echo '<p style="color:red;">'.$message.'</p>';
-?>
-   <table border="0" width="500">
-     <tr><td align="right">From: </td>
-         <td><input type="text" name="from" size="30" value="<?php isset($from) ? $from :   "info@pribela.pt" ?>"></td></tr>
-     <tr><td align="right">To: </td>
-         <td><input type="text" name="mname" size="30" value="<?php isset($to) ?  $to :  "ei11084@fe.up.pt" ?>"></td></tr>
-     <tr><td align="right">* Last Name: </td>
-         <td><input type="text" name="lname" size="30" value="<? echo @$lname ?>"></td></tr>
-   </table>
-<p>
-   <table border="0" width="500">
-     <tr><td align="right">* Primary Email: </td>
-         <td><input type="text" name="femail" size="30" value="<?php echo @$femail ?>"></td></tr>
-     <tr><td align="right">Secondary Email: </td>
-         <td><input type="text" name="f2email" size="30" value="<?php echo @$f2email ?>"></td></tr>
-   </table>
-<p>
-   <table border="0" width="600">
-     <tr><td align="right">* Street Address: </td>
-         <td><input type="text" name="saddy" size="40" value="<?php echo @$saddy ?>"></td></tr>
-     <tr><td align="right">Apartment/Suite Number: </td>
-         <td><input type="text" name="sapt" size="10" value="<?php echo @$sapt ?>"></td></tr>
-     <tr><td align="right">* City: </td>
-         <td><input type="text" name="scity" size="30" value="<?php echo @$scity ?>"></td></tr>
-         <td align="right">State: </td>
-         <td><input type="text" name="sstate" size="10" value="<?php echo @$sstate ?>"></td></tr>
-     <tr><td align="right">* Zip/Post Code: </td>
-         <td><input type="text" name="szip" size="10" value="<?php echo @$szip ?>"></td></tr>
-     <tr><td align="right">Country: </td>
-         <td><input type="text" name="scountry" size="30" value="<?php echo @$scountry ?>"></td></tr>
-   </table>
-<p>
-   <table border="0" width="500">
-     <tr><td align="right">* Phone Number 1: </td>
-         <td><input type="text" name="fphone1" size="20" value="<?php echo @$fphone1 ?>"></td></tr>
-     <tr><td align="right">Phone Number 2: </td>
-         <td><input type="text" name="fphone2" size="20" value="<?php echo @$fphone2 ?>"></td></tr>
-     <tr><td align="right">Phone Number 3: </td>
-         <td><input type="text" name="fphone3" size="20" value="<?php echo @$fphone3 ?>"> <input style="display:none;" name="info" type="text" value=""> </td></tr>
-   </table>
-<p>
-   <table border="0" width="500"><tr><td>
-     Comments:<br />
-     <TEXTAREA name="info" ROWS="10" COLS="60"></TEXTAREA>
-     </td></tr>
-     <tr><td align="right"><input type="submit" value="Send Now">
-     </td></tr>
-   </table>
-   </form>
-</body>
+            $("#logout").click(function () {
+                window.location.href = "logout.php";
+            });
+
+        });
+    </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.php">Gestão de sistema de Fidelização</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a >Newsletter</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestão de descontos <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="descontos_diretos.php?codCliente=">Descontos Directos (Famílias)</a>
+                            </li>
+                            <li><a href="descontos_pontos.php?codCliente=>">Descontos Por Pontos</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <button type="button" id="logout" class="btn btn-default navbar-btn navbar-right">Log out</button </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+    </nav>
+
+        <p></p>
+        <div class="container">
+            <form class="form-horizontal" role="form" action="email_form.php?do=send" method="POST" >
+                <div class="form-group">
+                    <label class="col-sm-1 control-label" >From</label>
+                    <div class="col-sm-10">
+                        <input type="email" id="to" class="form-control" id="from" placeholder="Enter email">
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <label class="col-sm-1 control-label" >Subject</label>
+                    <div class="col-sm-10">
+                        <input type="email" id="subject" class="form-control" placeholder="Subject">
+                    </div>
+                </div>
+
+                <div class="checkbox form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <label class="control-label">
+                            <input type="checkbox" checked="true"> Send default email
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label" >Content</label>
+                    <div class="col-sm-10">
+                        <textarea id="content" class="form-control" rows="7" ></textarea>
+                        <p class="help-block">You can use this area to customize the email to send</p>
+
+                    </div>
+                </div>
+                <div class="col-sm-offset-1 col-sm-10">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </form>
+        </div>
+
+
+    </body>
 </html>
 
 <?php
-    }
-    ?>
+}
+?>
