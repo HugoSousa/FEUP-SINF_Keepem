@@ -20,21 +20,8 @@ $(document).ready(function () {
             } else {
                 $("#cartaoClienteH3").show();
                 $("#cartaoCliente").append(resp.CDU_idCartaoCliente);
-                
-                $.ajax({
-                    type: "GET",
-                    url: "http://localhost:49822/api/cartoesclientes/" + resp.CDU_idCartaoCliente,
-                    dataType: "json",
-                    success: function (resp) {
-
-                        $("#pontosH3").show();
-                        $("#pontos").append(resp.CDU_Pontos);
-
-                    },
-                    error: function (e) {
-                        alert("Erro ao recolher dados do cliente!");
-                    }
-                });
+                $("#pontosH3").show();
+                $("#pontos").append(resp.Pontos);
             }
 
         },

@@ -1,5 +1,7 @@
 <?php include("navbar.php"); ?>
+
 <script src="js/descontos_pontos.js"></script>
+
 <div class="container">
     <div class="jumbotron center-middle" style="margin-bottom: 50px">
         <p class="text-center">Tem <span id="pontos_cliente">X</span> pontos</p>

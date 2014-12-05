@@ -1,4 +1,5 @@
 var familias_desconto = {};
+var produtos_familia = {};
 
 $(document).ready(function () {
 	$(document).on('click', '#dropdown_list li a', function() {
@@ -18,6 +19,8 @@ $(document).ready(function () {
 				
 				for(var i = 0; i < resp.length; i++){
 				
+					//guardar os artigos no array produtos_familia
+					//implementar paginacao / search
 				}				
 			},
 			error: function (e) {

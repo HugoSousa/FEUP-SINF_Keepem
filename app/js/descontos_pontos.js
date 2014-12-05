@@ -1,7 +1,10 @@
-var codCliente = "C0001";
+
+var codCliente = getParameterByName("codCliente");
 var pontosCliente;
 
 $(document).ready(function () {
+		
+	console.log(codCliente);
 	
 	$.ajax({
         type: "GET",
@@ -58,3 +61,10 @@ var getDescontosPontos = function() {
     });
 	
 };
+
+function getParameterByName(name) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}

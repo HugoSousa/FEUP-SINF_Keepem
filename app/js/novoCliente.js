@@ -36,6 +36,7 @@ $(document).ready(function () {
                         window.location.href = "index.php";
                     },
                     error: function (e) {
+						console.log(JSON.stringify(e));
                         alert("Erro ao criar cliente!");
                     }
                 });
