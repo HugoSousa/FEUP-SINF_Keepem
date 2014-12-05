@@ -28,17 +28,17 @@
     <div class="container">
 
         <div class="page-header">
-            <h1>Perfil <small>Cliente</small></h1>
+            <h3>O Meu Perfil <small>Cliente</small></h3>
         </div>
 
-        <h3>Nome do Cliente: <span id="nomeCliente" class="label label-primary"></span></h3>
+        <h4>Nome do Cliente: <span id="nomeCliente" class="label label-primary"></span></h4>
         <br>
-        <h3>Número de Contribuinte: <span id="numContribuinte" class="label label-primary"></span></h3>
+        <h4>Número de Contribuinte: <span id="numContribuinte" class="label label-primary"></span></h4>
         <br>
         <br>
-        <h3 id="cartaoClienteH3">ID Cartão de Cliente: <span id="cartaoCliente" class="label label-info"></span> <button type="submit" id="criarCartaoCliente" class="btn btn-lg btn-info btn-block">Criar Cartão de Cliente</button></h3>
+        <h4 id="cartaoClienteH4">ID Cartão de Cliente: <span id="cartaoCliente" class="label label-info"></span> <button type="submit" id="criarCartaoCliente" class="btn btn-lg btn-info btn-block">Criar Cartão de Cliente</button></h4>
         <br>
-        <h3 id="pontosH3">Pontos: <span id="pontos" class="label label-info"></span></h3>
+        <h4 id="pontosH4">Pontos: <span id="pontos" class="label label-info"></span></h4>
     </div>
 </body>
 

@@ -1,9 +1,9 @@
 $(document).ready(function () {
     var codCliente = getParameterByName('codCliente');
 
-    $("#cartaoClienteH3").hide();
+    $("#cartaoClienteH4").hide();
     $("#criarCartaoCliente").hide();
-    $("#pontosH3").hide();
+    $("#pontosH4").hide();
 
     $.ajax({
         type: "GET",
@@ -15,12 +15,12 @@ $(document).ready(function () {
             $("#numContribuinte").append(resp.NumContribuinte);
 
             if (resp.CDU_idCartaoCliente == null || resp.CDU_idCartaoCliente == "null") {
-                $("#cartaoClienteH3").show();
+                $("#cartaoClienteH4").show();
                 $("#criarCartaoCliente").show();
             } else {
-                $("#cartaoClienteH3").show();
+                $("#cartaoClienteH4").show();
                 $("#cartaoCliente").append(resp.CDU_idCartaoCliente);
-                $("#pontosH3").show();
+                $("#pontosH4").show();
                 $("#pontos").append(resp.Pontos);
             }
 
