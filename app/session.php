@@ -10,4 +10,5 @@ if (!isset($user_check)) {
         header("Location: index.php");
     }
 }
+
 ?>

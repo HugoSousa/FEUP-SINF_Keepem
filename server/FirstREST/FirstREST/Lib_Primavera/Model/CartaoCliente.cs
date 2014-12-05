@@ -13,12 +13,5 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
-
-        public int CDU_Pontos
-        {
-            get;
-            set;
-        }
-
     }
 }

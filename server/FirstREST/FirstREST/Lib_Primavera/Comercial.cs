@@ -36,7 +36,6 @@ namespace FirstREST.Lib_Primavera
                 {
                     cli = new Model.CartaoCliente();
                     cli.CDU_idCartaoCliente = objList.Valor("CDU_idCartaoCliente");
-                    cli.CDU_Pontos = objList.Valor("CDU_Pontos");
 
                     listCartoesClientes.Add(cli);
                     objList.Seguinte();
@@ -68,7 +67,6 @@ namespace FirstREST.Lib_Primavera
                     {
                         cli = new Model.CartaoCliente();
                         cli.CDU_idCartaoCliente = objList.Valor("CDU_idCartaoCliente");
-                        cli.CDU_Pontos = objList.Valor("CDU_Pontos");   
 
                         break;
                     }
@@ -106,27 +104,19 @@ namespace FirstREST.Lib_Primavera
                 StdBERegistoUtil registoUtil = new StdBERegistoUtil();
                 StdBECampos campos = new StdBECampos();
                 StdBECampo campoCDU_idCartaoCliente = new StdBECampo();
-                StdBECampo campoCDU_Pontos = new StdBECampo();
 
                 campoCDU_idCartaoCliente.Nome = "CDU_idCartaoCliente";
                 campoCDU_idCartaoCliente.Valor = Convert.ToString(objList.NumLinhas() + 1);
 
                 campos.Insere(campoCDU_idCartaoCliente);
 
-                campoCDU_Pontos.Nome = "CDU_Pontos";
-                campoCDU_Pontos.Valor = 0;
-
-                campos.Insere(campoCDU_Pontos);
-
                 registoUtil.set_Campos(campos);
 
                 PriEngine.Engine.TabelasUtilizador.Actualiza("TDU_CartaoCliente", registoUtil);
 
-
-                
+   
                 cartaoCliente = new Model.CartaoCliente();
                 cartaoCliente.CDU_idCartaoCliente = Convert.ToString(objList.NumLinhas() + 1);
-                cartaoCliente.CDU_Pontos = 0;
 
                 return cartaoCliente;
             }
