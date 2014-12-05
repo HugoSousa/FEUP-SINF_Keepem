@@ -1,4 +1,4 @@
-var codCliente = "C0001";
+var codCliente = "3";
 var pontosCliente;
 
 $(document).ready(function () {
