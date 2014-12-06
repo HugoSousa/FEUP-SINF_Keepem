@@ -911,12 +911,14 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT Familia, CDU_Desconto FROM Familias WHERE Familias.CDU_Desconto <> 0");
+                objList = PriEngine.Engine.Consulta("SELECT Familia, Descricao, CDU_Desconto FROM Familias WHERE Familias.CDU_Desconto <> 0");
 
                 while (!objList.NoFim())
                 {
                     fam = new Model.Familia();
                     fam.NomeFamilia = objList.Valor("Familia");
+                    fam.DescriFamilia = objList.Valor("Descricao");
+
                     fam.DescFamilia = objList.Valor("CDU_Desconto");
 
                     listFamilias.Add(fam);
