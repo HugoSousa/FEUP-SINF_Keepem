@@ -1,32 +1,6 @@
 <?php
-$result; 
 $default_from_email = "newsletter@pribela.pt";
 $default_subject_email = "Informações sobre novas oportunidades para clientes fidelizados";
-
-if (isset($_POST['do']) && strcmp($_POST['do'],"send") == 0)
-{
-
-    if (!isset($_POST['from']) || !isset( $_POST['content']) || !isset( $_POST['subject']) || !isset( $_POST['to'])) {
-        $result['error'] = "Missing parameters";
-        echo json_encode($result);
-
-    }
-    else {
-        $from = $_POST['from'];
-        $text = $_POST['content'];
-        $subj = $_POST['subject'];
-        $to = $_POST['to'];
-
-        $ehead = "From: ".$from."\r\n";
-        
-        $mailsend=mail("$to",htmlspecialchars("$subj"),htmlspecialchars("$text"),"$ehead"."\nContent-Type: text/html; charset=UTF-8\n");
-        $message = "Email was sent.";
-        $result['result'] = $mailsend;
-        unset($_POST['do']);
-        echo json_encode($result); 
-    }
-}
-else { // missing parameters
 ?><!DOCTYPE html>
 <html >
 
@@ -36,18 +10,18 @@ else { // missing parameters
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="../../favicon.ico">
+        <link rel="icon" href="../../../favicon.ico">
 
         <title>Envio de NewsLetter</title>
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
 
-        <link rel="stylesheet" href="/css/style.css" type="text/css">
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
 
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/jquery.dataTables.min.js"></script>
-        <script src="/js/dataTables.bootstrap.js"></script>
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.js"></script>
+        <script src="../js/jquery.dataTables.min.js"></script>
+        <script src="../js/dataTables.bootstrap.js"></script>
         <script>
             var default_subject = "<?php echo $default_subject_email ?>";
             var default_from = "<?php echo $default_from_email ?>";
@@ -114,21 +88,7 @@ else { // missing parameters
             function getEmailContent() {
                 var email = []
                 var linecounter = 8;
-                /*
-             $.ajax({
-                    type: "GET",
-                    url: "http://localhost:49822/api/clientes/",
-                    dataType: "json",
-                    success: function (resp) {
 
-                        console.log(resp);
-
-                    },
-                    error: function (e) {
-                        alert("Erro ao recolher dados do cliente!");
-                    }
-                });
-*/
                 email.push("Aproveite todas a promoções exclusivas a clientes fidelizados!");
                 email.push("Este mês, todos os artigos da categorias seguintes têm desconto direto em cartão:");
                 email.push("");
@@ -169,9 +129,22 @@ else { // missing parameters
                 return {text: email.join('\n'), lines: linecounter};
             }
 
-            $(document).ready(function () {
-                $('form').attr('hidden',true);
 
+            function updateProgressBar(current,total) {
+                $('.progress-bar').attr('aria-valuemax',total)
+                .attr('aria-valuenow',current).css('width', (100 * current/total) + "%").text(current + "/" + total);
+
+
+            }
+            $(document).ready(function () {
+                var emails_sent = 0;
+                var total_emails;
+                $('form').attr('hidden',true);
+                $('.progress').hide();
+                $('.success').hide();
+                $('.success').click(function() {
+                    $(this).hide(600);
+                });
                 $('#checkbox1').change(function() {
 
                     var ischecked = $(this).is(":checked");
@@ -186,8 +159,10 @@ else { // missing parameters
                 $('#checkbox1').attr("checked", true);
                 loadPromotionData();
 
-                $('form').on('submit', function() {
-                    $('.submit').attr("disabled", true);
+                $('.confirm-send').click(function() {
+                    $('.open-confirm').attr("disabled", "disabled");
+                    $('.open-confirm').hide();
+                    $('.progress').show();
                     var content = $('#content').val();
                     var from = $('#from').val();
                     var subject = $('#subject').val();
@@ -198,43 +173,56 @@ else { // missing parameters
                         return false; 
                     }
                     else {
+                        
                         $.ajax({
                             type: "GET",
                             url: "http://localhost:49822/api/clientes/",
                             dataType: "json",
                             success: function (resp) {
-                                var emails = 0;
+                                total_emails = 0;
                                 resp.forEach(function (client) {
-                                    if (client.CDU_Email != "") emails ++;
+                                    if (client.CDU_Email != "" && client.CDU_idCartaoCliente) total_emails++;
                                 });
-                                resp.forEach(function (client) {
-                                    if (client.CDU_Email != "")
-                                        $.ajax({
-                                            type: "GET",
-                                            url: "http://localhost:49822/api/clientes/" +  client.CodCliente ,
-                                            dataType: "json",
-                                            success: function (resp) {
-                                                console.log(resp);
-                                                $.ajax({
-                                                    type: "POST",
-                                                    url: "email_form.php",
-                                                    dataType: "json",
-                                                    data: {do: "send"},
-                                                    success: function (resp) {
-                                                        console.log(resp);
-
-                                                    },
-                                                    error: function (e) {
-                                                        alert("Erro ao enviar email");
+                                updateProgressBar(emails_sent, total_emails);
+                                if (total_emails != 0)
+                                    resp.forEach(function (client) {
+                                        if (client.CDU_Email != "" && client.CDU_idCartaoCliente)
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "http://localhost:49822/api/clientes/" +  client.CodCliente ,
+                                                dataType: "json",
+                                                success: function (resp) {
+                                                    console.log(resp);
+                                                    var campo_pontos = "0 pontos"
+                                                    var to = resp.CDU_Email;
+                                                    if (resp.pontos != 0) {
+                                                     campo_pontos = resp.Pontos + " pontos dos quais " + resp.PontosProximaExpiracao + " expiram a " + (resp.DataProximaExpiracao.split(' '))[0];
+                                                        
                                                     }
-                                                });  
+                                                    var body = content.replace("<CAMPOPONTOS>",campo_pontos); 
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "send_email.php",
+                                                        dataType: "json",
+                                                        data: {to: to, from:from, subject: subject, content: body },
+                                                        success: function (resp) {
+                                                            console.log(resp);
+                                                            emails_sent++;
+                                                            updateProgressBar(emails_sent, total_emails);
+                                                            if (emails_sent == total_emails) $('.success').show(600);
+                                                        },
+                                                        error: function (e) {
+                                                            console.log(e);
+                                                            alert("Erro ao enviar email (verifique o acesso ao servidor smtp)");
+                                                        }
+                                                    });  
 
-                                            },
-                                            error: function (e) {
-                                                alert("Erro ao recolher dados do cliente!");
-                                            }
-                                        });  
-                                });
+                                                },
+                                                error: function (e) {
+                                                    alert("Erro ao recolher dados do cliente!");
+                                                }
+                                            });  
+                                    });
 
                             },
                             error: function (e) {
@@ -244,7 +232,6 @@ else { // missing parameters
 
                     }
 
-                    return false; 
                 });
 
                 $("#logout").click(function () {
@@ -286,11 +273,17 @@ else { // missing parameters
                 <p></p>
                 <div class="container">
                     <div class="row loading_icon">
-                        <div class="col-xs-3 col-centered ">
+                        <div class="col-xs-1 col-centered ">
                             <span class="glyphicon glyphicon-repeat glyphicon-repeat-animate"></span> 
                         </div>
                     </div>
-                    <form class="form-horizontal" role="form" action="email_form.php?do=send" method="POST" >
+                    <form class="form-horizontal" role="form"  >
+
+                        <div class="col-sm-12" style="padding:0">
+                            <div class="col-sm-10 col-sm-offset-1" style="padding:0">
+                                <div class="success alert alert-info " role="alert">Newsletter enviada com <strong>sucesso</strong>!</div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-1 control-label" >From</label>
                             <div class="col-sm-10">
@@ -317,23 +310,47 @@ else { // missing parameters
                         <div class="checkbox form-group">
                             <div class="col-sm-offset-1 col-sm-10">
                                 <label class="control-label">
-                                    <input id="checkbox1" type="checkbox"> Send default email
+                                    <input id="checkbox1" type="checkbox"> Enviar email pré-defenido
                                 </label>
                             </div>
                         </div>
                         <br/>
                         <div class="form-group">
                             <div class="col-sm-offset-1 col-sm-10">
-                                <button class="submit" type="submit" class="btn btn-default">Send Newsletter</button>
+                                <span data-toggle="modal" data-target=".confirm-newsletter"class="open-confirm btn btn-info"  class="btn btn-default">Enviar Newsletter</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-offset-1 col-sm-10"  style="padding:0">
+
+                            <div class="progress ">
+
+                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%;">
+
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
 
 
+                <div class="modal fade confirm-newsletter" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title">Confirmação do envio</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Tem a certeza que deseja enviar esta mensagem para todos os clientes subscritos?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary confirm-send" data-dismiss="modal">Enviar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
                 </body>
             </html>
-
-        <?php
-     }
-        ?>
