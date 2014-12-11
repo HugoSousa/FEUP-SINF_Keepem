@@ -406,29 +406,6 @@ namespace FirstREST.Lib_Primavera
 
         }
 
-        /*
-        public static void InsereCliente(string codCliente, string nomeCliente, string numContribuinte, string moeda)
-        {
-            ErpBS objMotor = new ErpBS();
-            MotorPrimavera mp = new MotorPrimavera();
-
-            GcpBECliente myCli = new GcpBECliente();
-        .
-            objMotor = mp.AbreEmpresa("DEMO", "", "", "Default");
-
-            myCli.set_Cliente(codCliente);
-            myCli.set_Nome(nomeCliente);
-            myCli.set_NumContribuinte(numContribuinte);
-            myCli.set_Moeda(moeda);
-
-            objMotor.Comercial.Clientes.Actualiza(myCli);
-
-        }
-
-
-        */
-
-
         #endregion Cliente;   // -----------------------------  END   CLIENTE    -----------------------
 
 
