@@ -90,6 +90,7 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
                     descontoLinha = precoAntigo - precoNovo
                     totalDiscount = totalDiscount + descontoLinha
                     precoTotal = precoTotal + precoNovo
+                    Me.DocumentoVenda.Linhas(lineCounter).CamposUtil.Item("CDU_DescontoFidelizacao") = descontoLinha
                     ' PlataformaPRIMAVERA.Dialogos.MostraAviso "Fica por:" + CStr(Round(precoNovo, 2))
                     ' PlataformaPRIMAVERA.Dialogos.MostraAviso "Poupa" + CStr(descontoLinha)
                 Else
@@ -132,7 +133,8 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
                         descontoAtual = Me.DocumentoVenda.Linhas(lineCounter).Desconto1
                         descontoNovo = descontoAtual + ValorDesconto
                         Me.DocumentoVenda.Linhas(lineCounter).Desconto1 = descontoNovo
-                        Me.DocumentoVenda.CamposUtil.Item("CDU_DescontoFidelizacao") = descontoNovo
+                        
+                        ' descontoNovo
                         
                         ' PlataformaPRIMAVERA.Dialogos.MostraAviso "DESCONTO FINALISSIMO: " + CStr(Me.DocumentoVenda.Linhas(lineCounter).Desconto1)
                     End If
@@ -204,7 +206,8 @@ Private Sub EditorVendas_AntesDeGravar(Cancel As Boolean)
                 ' PlataformaPRIMAVERA.Dialogos.MostraAviso Int(descontoPercentagem)
                 desc = Me.DocumentoVenda.DescEntidade + Int(descontoPercentagem)
                 Me.DocumentoVenda.DescEntidade = desc
-                Me.DocumentoVenda.CamposUtil.Item("CDU_DescontoFidelizacao") = desc
+                Me.DocumentoVenda.CamposUtil.Item("CDU_DescontoFidelizacao") = Round((Me.DocumentoVenda.TotalDocumento - totalDiscount) * (Int(descontoPercentagem) / 100#), 2)
+                Me.DocumentoVenda.CamposUtil.Item("CDU_PontosUsados") = discountPointsUsed
                 
             End If
             
@@ -238,7 +241,7 @@ Private Sub EditorVendas_DepoisDeGravar(Filial As String, Serie As String, Tipo 
     
         strSQL = vbNullString
         
-        strSQL = "SELECT Clientes.CDU_idCartaoCliente, TDU_CartaoCliente.CDU_Pontos FROM Clientes, TDU_CartaoCliente "
+        strSQL = "SELECT Clientes.CDU_idCartaoCliente FROM Clientes, TDU_CartaoCliente "
         strSQL = strSQL & "WHERE Cliente = '"
         strSQL = strSQL & Me.DocumentoVenda.Entidade
         strSQL = strSQL & "' AND Clientes.CDU_idCartaoCliente = TDU_CartaoCliente.CDU_idCartaoCliente"
@@ -248,7 +251,7 @@ Private Sub EditorVendas_DepoisDeGravar(Filial As String, Serie As String, Tipo 
         If Not clienteFidelizado.NoFim Then
            ' Cliente fidelizado
                 
-           Me.DocumentoVenda.CamposUtil.Item("CDU_PontosUsados") = discountPointsUsed
+           ' Me.DocumentoVenda.CamposUtil.Item("CDU_PontosUsados") = discountPointsUsed
                 
            cartaoCliente = Int(clienteFidelizado.Valor(0))
                 
@@ -307,7 +310,7 @@ Private Sub EditorVendas_DepoisDeGravar(Filial As String, Serie As String, Tipo 
                 
                 strSQL = vbNullString
                 ' buscar ultimo id das transacoes e incrementar 1
-                strSQL = "SELECT CDU_idTransacaoPontos FROM TDU_TransacaoPontos ORDER BY CDU_idTransacaoPontos DESC"
+                strSQL = "SELECT CDU_idTransacaoPontos FROM TDU_TransacaoPontos ORDER BY CAST(CDU_idTransacaoPontos As numeric) DESC"
                 Set transacoesQuery = Aplicacao.BSO.Consulta(strSQL)
                 If Not transacoesQuery.NoFim Then
                     novoIdTransacaoPontos = Int(transacoesQuery.Valor(0)) + 1
@@ -325,6 +328,8 @@ Private Sub EditorVendas_DepoisDeGravar(Filial As String, Serie As String, Tipo 
                 Aplicacao.BSO.TabelasUtilizador.Actualiza "TDU_TransacaoPontos", novaTransacaoPontos
             End If
             
+            ' Me.DocumentoVenda.CamposUtil.Item("CDU_DescontoFidelizacao") = UserForm1.priceWithoutDiscountBox - UserForm1.priceWithDiscountBox
+            ' Me.DocumentoVenda.CamposUtil.Item("CDU_PontosUsados") = discountPointsUsed
         Else
           ' Cliente nao fidelizado
         End If
