@@ -16,10 +16,12 @@ if (isset($_POST['submit'])) {
             $emailFromAPI = $item["CDU_Email"];
             $passwordFromAPI = $item["CDU_Password"];
             $codClienteFromAPI = $item["CodCliente"];
+			$nomeClienteFromAPI = $item["NomeCliente"];
             if ($emailFromAPI == $email) {
                 if ($passwordFromAPI == $password) {
                     $loginOk = true;
                     $codCliente = $codClienteFromAPI;
+					$nomeCliente = $nomeClienteFromAPI;
                 }
                 else {
                     echo '<script language="javascript">alert("Password errada!")</script>';
@@ -29,6 +31,7 @@ if (isset($_POST['submit'])) {
         
         if (isset($loginOk)) {
             $_SESSION['codCliente'] = $codCliente;
+			$_SESSION['nomeCliente'] = $nomeCliente;
             header("location: cliente.php?codCliente=$codCliente");
         } else {
             $error = "Número de contribuinte ou password inválida!";

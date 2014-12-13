@@ -23,30 +23,7 @@
 
     <script>
         $(document).ready(function () {
-            /*
-            $('#historico_table').dataTable({
-                "searching": false,
-                'aoColumnDefs': [{
-                    'bSortable': false,
-                    'aTargets': ['nosort']
-    }]
-            });
-
-            $('#descontos_table').dataTable({
-                "searching": false,
-                "ordering": false,
-                "columns": [
-                    {
-                        "data": "pontos"
-                    },
-                    {
-                        "data": "desconto"
-                    }
-       ]
-            });
-            */
-
-
+            
             $("#logout").click(function () {
                 window.location.href = "logout.php";
             });
@@ -60,7 +37,7 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.php">Sistema de Fidelização de Clientes</a>
+                <a class="navbar-brand">Sistema de Fidelização de Clientes</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -77,11 +54,15 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="historico.php">Histórico</a>
+                    <li><a href="historico.php?codCliente=<?php echo $_SESSION['codCliente'];?>">Histórico</a>
                     </li>
                 </ul>
-
-                <button type="button" id="logout" class="btn btn-default navbar-btn navbar-right">Log out</button </div>
+				<ul class="nav navbar-nav navbar-right">
+					<button type="button" id="logout" class="btn btn-default navbar-btn">Log Out</button>
+					<li><a><?php echo $_SESSION['nomeCliente'];?></a></li>
+				</ul>
+				
+                <!-- <button type="button" id="logout" class="btn btn-default navbar-btn navbar-right">Log out</button </div> -->
                 <!-- /.navbar-collapse -->
             </div>
             <!-- /.container-fluid -->

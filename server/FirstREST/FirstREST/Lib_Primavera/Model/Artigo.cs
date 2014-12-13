@@ -19,7 +19,13 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public float Desconto
+        public double Preco
+        {
+            get;
+            set;
+        }
+
+        public string Imagem
         {
             get;
             set;

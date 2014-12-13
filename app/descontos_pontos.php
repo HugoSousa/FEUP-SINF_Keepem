@@ -3,9 +3,9 @@
 <script src="js/descontos_pontos.js"></script>
 
 <div class="container">
-    <div class="jumbotron center-middle" style="margin-bottom: 50px">
+    <div class="jumbotron center-middle" style="display:none; margin-bottom: 50px" id="pontos_info">
         <p class="text-center">Tem <span id="pontos_cliente">X</span> pontos</p>
-        <div class="text-center"><small>dos quais <span id="pontos_expiracao_cliente">Y</span> expiram em <span id="data_expiracao_cliente">Z</</small>
+        <div class="text-center" id="pontos_expiracao_info" style="display:none"><small>dos quais <span id="pontos_expiracao_cliente">Y</span> expiram em <span id="data_expiracao_cliente">Z</</small>
         </div>
     </div>
 

@@ -2,7 +2,7 @@
 <script src="js/descontos_diretos.js"></script>
 <div class="container">
 
-    <h3 class="text-center">Categorias em Desconto </h3>
+    <h3 class="text-center" style="margin-bottom:20px">Categorias em Desconto </h3>
 
     <div class="dropdown text-center">
         <a class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" href="#" style="width: 30%">
@@ -22,172 +22,13 @@
     <h2 class="text-center hide show-category"><span id="desconto_direto_familia">X</span>% Desconto Direto</h2>
     <p class="text-center hide show-category">nos seguintes produtos</p>
 
-    <div id="produtos">
-        <div class="row" style="margin-left:10%; margin-right: 10%; margin-top: 50">
+    <div id="produtos" style="margin-top:50">
 
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/no_image.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+            
+			
 
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/Koala.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+	</div>
 
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/Koala.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/Koala.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/Koala.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/Koala.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-
-        <div class="row" style="margin-left:10%; margin-right: 10%;">
-
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/Koala.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/Koala.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/Koala.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/Koala.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/Koala.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-2">
-                <div class="thumbnail">
-                    <img src="img/Koala.jpg" alt="...">
-                    <div class="caption">
-                        <h4>Produto blablablablall adsad aeqeq </h4>
-                        <span><del>5.40€</del></span>
-                        <span class="pull-right"><b>4.95€</b>></span>
-                        <p>Poupa: <span class="pull-right">0.45€</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
 </div>
 
 </body>
