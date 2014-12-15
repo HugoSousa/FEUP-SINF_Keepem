@@ -11,23 +11,24 @@ using System.Diagnostics;
 
 namespace FirstREST.Controllers
 {
+    //GET api/familias
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class DescontosPontosController : ApiController
+    public class FamiliasController : ApiController
     {
-        // GET: DescontosPontos
-        public IEnumerable<Lib_Primavera.Model.Desconto> Get()
+        public IEnumerable<Lib_Primavera.Model.Familia> Get()
         {
-            return Lib_Primavera.Comercial.ListaDescontosPontos();
+            return Lib_Primavera.Comercial.ListaFamilias();
         }
 
-        // POST: DescontosPontos
-        public HttpResponseMessage Post(Lib_Primavera.Model.Desconto[] descontos)
+        //POST api/familias
+
+        public HttpResponseMessage Post(Lib_Primavera.Model.Familia familia)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
 
             try
             {
-                erro = Lib_Primavera.Comercial.UpdDescontosPontos(descontos);
+                erro = Lib_Primavera.Comercial.UpdFamilia(familia);
                 if (erro.Erro == 0)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, erro.Descricao);
@@ -43,6 +44,5 @@ namespace FirstREST.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
             }
         }
-
     }
 }

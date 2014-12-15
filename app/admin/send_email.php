@@ -15,9 +15,9 @@ $default_subject_email = "Informações sobre novas oportunidades para clientes 
         $subj = $_POST['subject'];
         $to = $_POST['to'];
 
-        $ehead = "From: ".$from."\r\n";
+        $ehead = "From: ".$from.PHP_EOL;
 
-        $mailsend=mail("$to",htmlspecialchars("$subj"),htmlspecialchars("$text"),"$ehead"."\nContent-Type: text/html; charset=UTF-8\n");
+        $mailsend=mail("$to",htmlspecialchars("$subj"),"$text","$ehead"."\nContent-Type: text/plain; charset=UTF-8".PHP_EOL);
         $message = "Email was sent.";
         $result['result'] = $mailsend;
         unset($_POST['do']);

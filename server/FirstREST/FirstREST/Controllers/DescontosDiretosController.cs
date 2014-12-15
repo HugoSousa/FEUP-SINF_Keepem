@@ -18,6 +18,7 @@ namespace FirstREST.Controllers
         public IEnumerable<Lib_Primavera.Model.Familia> Get()
         {
             return Lib_Primavera.Comercial.ListaFamiliasDescontoDireto();
+
         }
     }
 }

@@ -286,6 +286,7 @@
     <Compile Include="Controllers\ArtigosController.cs" />
     <Compile Include="Controllers\CartoesClientesController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\FamiliasController.cs" />
     <Compile Include="Controllers\DescontosDiretosController.cs" />
     <Compile Include="Controllers\DescontosPontosController.cs" />
     <Compile Include="Controllers\DocCompraController.cs" />
