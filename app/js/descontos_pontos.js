@@ -3,6 +3,19 @@ var pontosCliente;
 
 $(document).ready(function () {
 		
+	$('#descontos_table').dataTable({
+		"searching": false,
+		"ordering": false,
+		"columns": [
+			{
+				"data": "pontos"
+			},
+			{
+				"data": "desconto"
+			}
+	    ]
+	});
+	
 	console.log(codCliente);
 	
 	$.ajax({
@@ -11,10 +24,21 @@ $(document).ready(function () {
         dataType: "json",
         success: function (resp) {
 			
+			var expira = false;
 			pontosCliente = resp.Pontos;
+			
 			$('#pontos_cliente').text(resp.Pontos);
-			$('#pontos_expiracao_cliente').text(resp.PontosProximaExpiracao);
-			$('#data_expiracao_cliente').text(resp.DataProximaExpiracao);
+			if(resp.PontosProximaExpiracao > 0){
+				console.log("here");
+				expira = true;
+				$('#pontos_expiracao_cliente').text(resp.PontosProximaExpiracao);
+				$('#data_expiracao_cliente').text(resp.DataProximaExpiracao);
+			}
+			$('#pontos_info').show();
+			
+			if(expira)
+				$('#pontos_expiracao_info').show();
+			
 			
 			getDescontosPontos();
         },

@@ -32,7 +32,7 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
-        public double TotalMerc
+        public double PrecoFinal
         {
             get;
             set;
@@ -45,7 +45,6 @@ namespace FirstREST.Lib_Primavera.Model
         }
 
         public List<Model.LinhaDocVenda> LinhasDoc
-
         {
             get;
             set;

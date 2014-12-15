@@ -290,6 +290,7 @@
     <Compile Include="Controllers\DescontosDiretosController.cs" />
     <Compile Include="Controllers\DescontosPontosController.cs" />
     <Compile Include="Controllers\DocCompraController.cs" />
+    <Compile Include="Controllers\DocVendaClienteController.cs" />
     <Compile Include="Controllers\DocVendaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -437,6 +438,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\DescontosPontos\" />
+    <Folder Include="Views\DocVendaCliente\" />
     <Folder Include="Views\Historico\" />
   </ItemGroup>
   <ItemGroup>
