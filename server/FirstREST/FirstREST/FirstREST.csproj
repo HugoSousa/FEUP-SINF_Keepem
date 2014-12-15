@@ -285,6 +285,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ArtigosController.cs" />
     <Compile Include="Controllers\CartoesClientesController.cs" />
+    <Compile Include="Controllers\FuncionariosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\FamiliasController.cs" />
     <Compile Include="Controllers\DescontosDiretosController.cs" />
@@ -300,6 +301,7 @@
     <Compile Include="Lib_Primavera\Comercial.cs" />
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />
     <Compile Include="Lib_Primavera\Model\CartaoCliente.cs" />
+    <Compile Include="Lib_Primavera\Model\Funcionario.cs" />
     <Compile Include="Lib_Primavera\Model\Cliente.cs" />
     <Compile Include="Lib_Primavera\Model\Desconto.cs" />
     <Compile Include="Lib_Primavera\Model\DocCompra.cs" />

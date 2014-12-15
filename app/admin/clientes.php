@@ -24,29 +24,50 @@ include "check_login.php";
         <script src="../js/dataTables.bootstrap.js"></script>
         <script>
             var familias = null;
+            var current_clients = 0;
 
             function loadData() {
 
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost:49822/api/familias/",
+                    url: "http://localhost:49822/api/clientes/",
                     dataType: "json",
                     success: function (resp) {
-
-                        //console.log(resp);
-                        familias = resp;
-                        $('.loading_icon').hide();
-                        resp.forEach(function(familia) {
-
-                            add_new_row([familia.NomeFamilia, familia.DescriFamilia, familia.DescFamilia],false);
-
+                        total_clients = 0;
+                        resp.forEach(function (client) {
+                            if (client.CDU_Email != "" && client.CDU_idCartaoCliente) total_clients++;
                         });
-                        $('#data').show();
+                        if (total_clients != 0)
+                            resp.forEach(function (client) {
+                                if (client.CDU_Email != "" && client.CDU_idCartaoCliente)
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "http://localhost:49822/api/clientes/" +  client.CodCliente ,
+                                        dataType: "json",
+                                        success: function (resp) {
+
+                                            console.log(resp);
+                                            add_new_row([resp.CodCliente,resp.CDU_idCartaoCliente, resp.NomeCliente,  resp.CDU_Email,resp.Pontos],false);
+                                            current_clients++;
+                                            if (total_clients == current_clients) {
+                                                $('.loading_icon').hide();
+                                                $('#data').show();
+                                            }
+
+                                        },
+                                        error: function (e) {
+                                            alert("Erro ao recolher dados do cliente!");
+                                        }
+                                    });  
+                            });
+
                     },
                     error: function (e) {
-                        alert("Erro ao recolher dados dos descontos diretos!");
+                        alert("Erro ao recolher dados dos clientes!");
                     }
-                });
+                });  
+
+
 
             }
 
@@ -104,90 +125,8 @@ include "check_login.php";
                 $(tr).appendTo($('#tab_logic'));
                 if (editMode) set_editMode(tr);
 
-                $(tr).find("td button.row-remove").on("click", function() {
-                    $(this).closest("tr").remove();
-                    // TODO mandar para o server
-                });
-
-                $(tr).find("td button.row-edit").on("click", function() {
-                    set_editMode($(this).closest("tr"));
-                });
-
-                $(tr).find("td button.row-save").on("click", function() {
-                    var button = $(this);
-                    button.attr("disabled",true);
-
-                    var count = 0;
-                    var NomeFamilia;
-                    var DescFamilia;
-                    var DescriFamilia;
-
-                    $(this).closest("tr").find("input").each(function() {
-                        if (count == 0) NomeFamilia = $(this).val();
-                        if (count == 1) DescriFamilia = $(this).val();
-                        if (count == 2) DescFamilia = $(this).val();
-                        count++;
-                    });
-
-                    var valid = check_input(tr);
-                    if (valid){
-                        tr.find('input').attr("disabled",true);
-
-                        $.ajax({
-                            type: "POST",
-                            url: "http://localhost:49822/api/familias/",
-                            dataType: "json",
-                            data: {NomeFamilia: NomeFamilia, DescFamilia:DescFamilia, DescriFamilia: DescriFamilia },
-                            success: function (resp) {
-                                console.log(resp);
-                                if (resp == "Sucesso") set_valueMode(button.closest("tr"));
-                                button.attr("disabled",false);
-                                tr.find('input:not(.nochange)').attr("disabled",false);
-
-                            },
-                            error: function (e) {
-                                console.log(e);
-                                console.log(e.responseText);
-
-                                alert("Erro ao editar familia");
-                                button.attr("disabled",false);
-                                tr.find('input:not(.nochange)').attr("disabled",false);
-
-                            }
-                        });  
-
-                    }
-                    else {
-                        alert("Por favor introduza valores válidos nos campos antes de gravar");   
-                        button.attr("disabled", false);
-
-                    }
-                });
-
-
-
-
-
             }
 
-            function check_input(tr) {
-                var input = true;
-
-                $.each((tr).find('td input.positive_value'), function() {
-                    input = input & isNormalInteger($(this).val());
-
-                });
-
-                $.each((tr).find('td input.req_string'), function() {
-                    input = input & ($(this).val() != "");
-                });
-
-                return input;
-            }
-
-            function isNormalInteger(str) {
-                return /^\+?(0|[1-9]\d*)$/.test(str);
-            }
 
             $(document).ready(function () {
 
@@ -256,7 +195,6 @@ include "check_login.php";
     <body>
         <?php include_once "nav.php"?>
 
-
         <p></p>
         <div class="container">
             <div class="row loading_icon">
@@ -265,7 +203,7 @@ include "check_login.php";
                 </div>
             </div>
             <div id="data">
-                <h1>Descontos Diretos <small>(Famílias)</small> </h1>
+                <h1>Clientes Fidelizados </h1>
 
                 <div class="row clearfix">
                     <div class="col-md-12 table-responsive">
@@ -273,16 +211,19 @@ include "check_login.php";
                             <thead>
                                 <tr >
                                     <th class="text-center">
-                                        Código
+                                        Código Cliente
                                     </th>
                                     <th class="text-center">
-                                        Descrição
+                                        ID Cartão
                                     </th>
                                     <th class="text-center">
-                                        Valor (%)
+                                        Nome
                                     </th>
                                     <th class="text-center">
-                                        Editar
+                                        Email
+                                    </th>
+                                    <th class="text-center">
+                                        Pontos
                                     </th>
 
                                 </tr>
@@ -291,27 +232,24 @@ include "check_login.php";
                                 <tr id='addr0' data-id="0" class="hidden">
                                     <td data-name="cod">
                                         <div class="value text-center"></div>
-                                        <input type="text" name='cod'  placeholder='Código' class="form-control req_string nochange" style="display:none" disabled/>
                                     </td>
-                                    <td data-name="desc">
+                                    <td data-name="id">
                                         <div class="value text-center"></div>
 
-                                        <input type="text" name='descri' placeholder='Descrição' class="form-control req_string" style="display:none"/>
                                     </td>
-                                    <td data-name="val">
+                                    <td data-name="nome">
                                         <div class="value text-center"></div>
 
-                                        <input type="text" name='desc' placeholder='Desconto %' class="form-control positive_value" style="display:none"/>
                                     </td>
-                                    <td data-name="ed">
-
-                                        <div class="row text-center" >
-                                            <p class="edit-button"><button  class='btn btn-info btn-sm row-edit'><span class="glyphicon glyphicon-pencil"></span></button></p>
-                                            <p class="save-button" style="display:none"><button  class='btn btn-success btn-sm row-save'><span class="glyphicon glyphicon-ok"></span></button></p>
-
-                                        </div>
+                                    <td data-name="email">
+                                        <div class="value text-center"></div>
 
                                     </td>
+                                    <td data-name="pontos">
+                                        <div class="value text-center"></div>
+
+                                    </td>
+
 
 
                                 </tr>

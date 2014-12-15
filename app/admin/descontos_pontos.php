@@ -1,3 +1,6 @@
+<?php
+include "check_login.php";
+?>
 <!DOCTYPE html>
 <html >
 
@@ -103,32 +106,32 @@
 
                 $(tr).find("td button.row-remove").on("click", function() {
                     $(this).closest("tr").remove();
-                        var data = getDescontosData();
-                        //console.log(data);
-                        $.ajax({
-                            type: "POST",
-                            url: "http://localhost:49822/api/descontospontos/",
-                            data: JSON.stringify(data),
-                            contentType: 'application/json; charset=utf-8', 
-                            processData: false,
-                            success: function (resp) {
-                                console.log(resp);
-                                if (resp == "Sucesso") set_valueMode(button.closest("tr"));
-                                button.attr("disabled",false);
-                                tr.find('input').attr("disabled",false);
+                    var data = getDescontosData();
+                    //console.log(data);
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:49822/api/descontospontos/",
+                        data: JSON.stringify(data),
+                        contentType: 'application/json; charset=utf-8', 
+                        processData: false,
+                        success: function (resp) {
+                            console.log(resp);
+                            if (resp == "Sucesso") set_valueMode(button.closest("tr"));
+                            button.attr("disabled",false);
+                            tr.find('input').attr("disabled",false);
 
 
-                            },
-                            error: function (e) {
-                                console.log(e);
-                                console.log(e.responseText);
+                        },
+                        error: function (e) {
+                            console.log(e);
+                            console.log(e.responseText);
 
-                                alert("Erro ao editar familia");
-                                button.attr("disabled",false);
-                                tr.find('input').attr("disabled",false);
+                            alert("Erro ao editar familia");
+                            button.attr("disabled",false);
+                            tr.find('input').attr("disabled",false);
 
-                            }
-                        });                  });
+                        }
+                    });                  });
 
                 $(tr).find("td button.row-edit").on("click", function() {
                     set_editMode($(this).closest("tr"));
@@ -307,75 +310,75 @@
         </script>
     </head>
     <body>
-      <?php include_once "nav.php"?>
+        <?php include_once "nav.php"?>
 
 
-                <p></p>
-                <div class="container">
-                    <div class="row loading_icon">
-                        <div class="col-xs-1 col-centered ">
-                            <span class="glyphicon glyphicon-repeat glyphicon-repeat-animate"></span> 
-                        </div>
-                    </div>
-                    <div id="data">
+        <p></p>
+        <div class="container">
+            <div class="row loading_icon">
+                <div class="col-xs-1 col-centered ">
+                    <span class="glyphicon glyphicon-repeat glyphicon-repeat-animate"></span> 
+                </div>
+            </div>
+            <div id="data">
+                <h1>Descontos por Pontos  </h1>
+                <div class="row clearfix">
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-bordered table-hover" id="tab_logic">
+                            <thead>
+                                <tr >
+                                    <th class="text-center">
+                                        Pontos
+                                    </th>
+                                    <th class="text-center">
+                                        Desconto (%)
+                                    </th>
+                                    <th class="text-center">
+                                        Editar
+                                    </th>
+                                    <th class="text-center">
+                                        Apagar
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id='addr0' data-id="0" class="hidden">
+                                    <td data-name="cod">
+                                        <div class="value text-center"></div>
+                                        <input type="text" name='cod'  placeholder='Pontos' class="form-control positive_value" style="display:none" />
+                                    </td>
+                                    <td data-name="desc">
+                                        <div class="value text-center"></div>
 
-                        <div class="row clearfix">
-                            <div class="col-md-12 table-responsive">
-                                <table class="table table-bordered table-hover" id="tab_logic">
-                                    <thead>
-                                        <tr >
-                                            <th class="text-center">
-                                                Pontos
-                                            </th>
-                                            <th class="text-center">
-                                                Desconto (%)
-                                            </th>
-                                            <th class="text-center">
-                                                Editar
-                                            </th>
-                                            <th class="text-center">
-                                                Apagar
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr id='addr0' data-id="0" class="hidden">
-                                            <td data-name="cod">
-                                                <div class="value text-center"></div>
-                                                <input type="text" name='cod'  placeholder='Pontos' class="form-control positive_value" style="display:none" />
-                                            </td>
-                                            <td data-name="desc">
-                                                <div class="value text-center"></div>
+                                        <input type="text" name='descri' placeholder='Desconto %' class="form-control positive_value less_hundred" style="display:none"/>
+                                    </td>
+                                    <td data-name="ed">
 
-                                                <input type="text" name='descri' placeholder='Desconto %' class="form-control positive_value less_hundred" style="display:none"/>
-                                            </td>
-                                            <td data-name="ed">
+                                        <div class="row text-center" >
+                                            <p class="edit-button"><button  class='btn btn-info btn-sm row-edit'><span class="glyphicon glyphicon-pencil"></span></button></p>
+                                            <p class="save-button" style="display:none"><button  class='btn btn-success btn-sm row-save'><span class="glyphicon glyphicon-ok"></span></button></p>
 
-                                                <div class="row text-center" >
-                                                    <p class="edit-button"><button  class='btn btn-info btn-sm row-edit'><span class="glyphicon glyphicon-pencil"></span></button></p>
-                                                    <p class="save-button" style="display:none"><button  class='btn btn-success btn-sm row-save'><span class="glyphicon glyphicon-ok"></span></button></p>
+                                        </div>
 
-                                                </div>
-
-                                            </td>
-                                            <td data-name="del">
-                                                <div class="row text-center" >
-                                                    <p> <button  class='btn btn-danger btn-sm row-remove'><span class="glyphicon glyphicon-trash"></span></button></p>
-                                                </div>
-                                            </td>
+                                    </td>
+                                    <td data-name="del">
+                                        <div class="row text-center" >
+                                            <p> <button  class='btn btn-danger btn-sm row-remove'><span class="glyphicon glyphicon-trash"></span></button></p>
+                                        </div>
+                                    </td>
 
 
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <a id="add_row" class="btn btn-default pull-right">Adicionar Desconto Direto</a>    
-
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+                <a id="add_row" class="btn btn-default pull-right">Adicionar Desconto Direto</a>    
+
+            </div>
+        </div>
 
 
 
-                </body>
-            </html>
+    </body>
+</html>

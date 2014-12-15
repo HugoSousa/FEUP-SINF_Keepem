@@ -1,4 +1,5 @@
 <?php
+include "check_login.php";
 $default_from_email = "newsletter@pribela.pt";
 $default_subject_email = "Informações sobre novas oportunidades para clientes fidelizados";
 ?><!DOCTYPE html>
@@ -173,7 +174,7 @@ $default_subject_email = "Informações sobre novas oportunidades para clientes 
                         return false; 
                     }
                     else {
-                        
+
                         $.ajax({
                             type: "GET",
                             url: "http://localhost:49822/api/clientes/",
@@ -196,8 +197,8 @@ $default_subject_email = "Informações sobre novas oportunidades para clientes 
                                                     var campo_pontos = "0 pontos"
                                                     var to = resp.CDU_Email;
                                                     if (resp.Pontos != 0) {
-                                                     campo_pontos = resp.Pontos + " pontos dos quais " + resp.PontosProximaExpiracao + " expiram a " + (resp.DataProximaExpiracao.split(' '))[0];
-                                                        
+                                                        campo_pontos = resp.Pontos + " pontos dos quais " + resp.PontosProximaExpiracao + " expiram a " + (resp.DataProximaExpiracao.split(' '))[0];
+
                                                     }
                                                     var body = content.replace("<CAMPOPONTOS>",campo_pontos); 
                                                     $.ajax({
@@ -242,89 +243,90 @@ $default_subject_email = "Informações sobre novas oportunidades para clientes 
         </script>
     </head>
     <body>
-      <?php include_once "nav.php"?>
+        <?php include_once "nav.php"?>
 
-                <p></p>
-                <div class="container">
-                    <div class="row loading_icon">
-                        <div class="col-xs-1 col-centered ">
-                            <span class="glyphicon glyphicon-repeat glyphicon-repeat-animate"></span> 
-                        </div>
+        <p></p>
+        <div class="container">
+            <div class="row loading_icon">
+                <div class="col-xs-1 col-centered ">
+                    <span class="glyphicon glyphicon-repeat glyphicon-repeat-animate"></span> 
+                </div>
+            </div>
+            <form class="form-horizontal" role="form"  >
+                <h3>Newsletter  </h3>
+
+                <div class="col-sm-12" style="padding:0">
+                    <div class="col-sm-10 col-sm-offset-1" style="padding:0">
+                        <div class="success alert alert-info " role="alert">Newsletter enviada com <strong>sucesso</strong>!</div>
                     </div>
-                    <form class="form-horizontal" role="form"  >
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label" >De</label>
+                    <div class="col-sm-10">
+                        <input type="email" id="from" class="form-control email_field" id="from" placeholder="Enter email" value="" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
 
-                        <div class="col-sm-12" style="padding:0">
-                            <div class="col-sm-10 col-sm-offset-1" style="padding:0">
-                                <div class="success alert alert-info " role="alert">Newsletter enviada com <strong>sucesso</strong>!</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label" >De</label>
-                            <div class="col-sm-10">
-                                <input type="email" id="from" class="form-control email_field" id="from" placeholder="Enter email" value="" disabled>
-                            </div>
-                        </div>
-                        <div class="form-group">
-
-                            <label class="col-sm-1 control-label" >Assunto</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="subject" class="form-control email_field" placeholder="Subject" value="" disabled>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label" >Conteúdo</label>
-                            <div class="col-sm-10">
-                                <textarea id="content" class="form-control email_field" rows="0" disabled></textarea>
-                                <p class="help-block">Utilize esta área para personalizar o email a enviar</p>
-
-                            </div>
-                        </div>
-                        <div class="checkbox form-group">
-                            <div class="col-sm-offset-1 col-sm-10">
-                                <label class="control-label">
-                                    <input id="checkbox1" type="checkbox"> Enviar email pré-defenido
-                                </label>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="form-group">
-                            <div class="col-sm-offset-1 col-sm-10">
-                                <span data-toggle="modal" data-target=".confirm-newsletter"class="open-confirm btn btn-info"  class="btn btn-default">Enviar Newsletter</span>
-                            </div>
-                        </div>
-                        <div class="col-sm-offset-1 col-sm-10"  style="padding:0">
-
-                            <div class="progress ">
-
-                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%;">
-
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    <label class="col-sm-1 control-label" >Assunto</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="subject" class="form-control email_field" placeholder="Subject" value="" disabled>
+                    </div>
                 </div>
 
 
-                <div class="modal fade confirm-newsletter" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                <h4 class="modal-title">Confirmação do envio</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>Tem a certeza que deseja enviar esta mensagem para todos os clientes subscritos?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary confirm-send" data-dismiss="modal">Enviar</button>
-                            </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label" >Conteúdo</label>
+                    <div class="col-sm-10">
+                        <textarea id="content" class="form-control email_field" rows="0" disabled></textarea>
+                        <p class="help-block">Utilize esta área para personalizar o email a enviar</p>
+
+                    </div>
+                </div>
+                <div class="checkbox form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <label class="control-label">
+                            <input id="checkbox1" type="checkbox"> Enviar email pré-defenido
+                        </label>
+                    </div>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <span data-toggle="modal" data-target=".confirm-newsletter"class="open-confirm btn btn-info"  class="btn btn-default">Enviar Newsletter</span>
+                    </div>
+                </div>
+                <div class="col-sm-offset-1 col-sm-10"  style="padding:0">
+
+                    <div class="progress ">
+
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%;">
 
                         </div>
                     </div>
                 </div>
+            </form>
+        </div>
 
-                </body>
-            </html>
+
+        <div class="modal fade confirm-newsletter" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Confirmação do envio</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Tem a certeza que deseja enviar esta mensagem para todos os clientes subscritos?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary confirm-send" data-dismiss="modal">Enviar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

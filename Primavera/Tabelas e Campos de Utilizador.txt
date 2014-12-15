@@ -29,3 +29,7 @@
 --CDU_idTipoDesconto ( e so a chave da tabela)
 --CDU_Desconto
 --CDU_Pontos
+
+-TDU_Funcionario
+--CDU_username ( 254 char)
+--CDU_password ( 254 char)

@@ -1197,5 +1197,37 @@ namespace FirstREST.Lib_Primavera
                 return null;
         }
 
+        //------------------------------------ LISTA Funcionarios
+
+        public static List<Model.Funcionario> ListaFuncionarios()
+        {
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+
+            Model.Funcionario desc = new Model.Funcionario();
+            List<Model.Funcionario> list = new List<Model.Funcionario>();
+
+
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_Funcionario");
+
+                while (!objList.NoFim())
+                {
+                    desc = new Model.Funcionario();
+                    desc.username = objList.Valor("CDU_username");
+                    desc.password = objList.Valor("CDU_password");
+
+                    list.Add(desc);
+                    objList.Seguinte();
+
+                }
+
+                return list;
+            }
+            else
+                return null;
+        }
     }
 }
