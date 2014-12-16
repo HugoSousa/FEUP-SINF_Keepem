@@ -57,6 +57,13 @@ $(document).ready(function () {
 			$("#cartaoCliente").append(resp.CDU_idCartaoCliente);
 			$("#pontosH4").show();
 			$("#pontos").append(resp.Pontos);
+			if(resp.Pontos > 0){
+				$('#numero_pontos_expiracao').text(resp.PontosProximaExpiracao);
+				var data = resp.DataProximaExpiracao.split(" ")[0];
+				$('#data_pontos_expiracao').text(data);
+				$('#expiracao_pontos').show();
+			}
+			
 			if(resp.CDU_Subscribed)
 				$('#subscribe_button').addClass('active');
 			else

@@ -36,7 +36,7 @@
         <br>
         <h4 id="cartaoClienteH4"><span style="display: inline-block; width:20%">ID Cartão de Cliente:</span><span id="cartaoCliente" class="label label-primary"></span> <button type="submit" id="criarCartaoCliente" class="btn btn-lg btn-info btn-block">Criar Cartão de Cliente</button></h4>
         <br>
-        <h4 id="pontosH4"><span style="display: inline-block; width:20%">Pontos:</span><span id="pontos" class="label label-primary"></span></h4>
+        <h4 id="pontosH4"><span style="display: inline-block; width:20%">Pontos:</span><span id="pontos" class="label label-primary"></span><small id="expiracao_pontos">  dos quais <span id="numero_pontos_expiracao"></span> expiram em <span id="data_pontos_expiracao"></span></small></h4>
 		
 		<div style="text-align:center; margin-top:100; margin-bottom:50">
 			<h4>Newsletter</h4>
