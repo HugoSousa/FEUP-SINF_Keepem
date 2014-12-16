@@ -12,13 +12,15 @@ using System.Diagnostics;
 namespace FirstREST.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class DescontosDiretosController : ApiController
+    public class FuncionariosController : ApiController
     {
-        // GET: DescontosDiretos
-        public IEnumerable<Lib_Primavera.Model.Familia> Get()
-        {
-            return Lib_Primavera.Comercial.ListaFamiliasDescontoDireto();
+        //
+        // GET: /Funcionarios/
 
+        public IEnumerable<Lib_Primavera.Model.Funcionario> Get()
+        {
+            return Lib_Primavera.Comercial.ListaFuncionarios();
         }
+
     }
 }

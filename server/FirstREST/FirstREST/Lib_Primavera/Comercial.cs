@@ -113,7 +113,6 @@ namespace FirstREST.Lib_Primavera
                 registoUtil.set_Campos(campos);
 
                 PriEngine.Engine.TabelasUtilizador.Actualiza("TDU_CartaoCliente", registoUtil);
-
    
                 cartaoCliente = new Model.CartaoCliente();
                 cartaoCliente.CDU_idCartaoCliente = Convert.ToString(objList.NumLinhas() + 1);
@@ -151,7 +150,9 @@ namespace FirstREST.Lib_Primavera
                     cli.CDU_Email = objList.Valor("CDU_Email");
                     cli.CDU_Password = objList.Valor("CDU_Password");
                     cli.CDU_idCartaoCliente = objList.Valor("CDU_idCartaoCliente");
-
+                    string val = Convert.ToString(objList.Valor("CDU_Subscribed"));
+                    if (val == "") cli.CDU_Subscribed = false;
+                    else cli.CDU_Subscribed = Convert.ToBoolean(objList.Valor("CDU_Subscribed"));
                     listClientes.Add(cli);
                     objList.Seguinte();
 
@@ -176,14 +177,14 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
                 //objList = PriEngine.Engine.Consulta("SELECT *, NumContrib as NumContribuinte FROM CLIENTES");
-                objList = PriEngine.Engine.Consulta(@"SELECT Clientes.Cliente, Clientes.nome, Clientes.NumContrib AS NumContribuinte, Clientes.Moeda, Clientes.CDU_Email, Clientes.CDU_Password, Clientes.CDU_idCartaoCliente, pontos.Pontos 
+                objList = PriEngine.Engine.Consulta(@"SELECT Clientes.Cliente, Clientes.nome, Clientes.NumContrib AS NumContribuinte, Clientes.Moeda, Clientes.CDU_Email, Clientes.CDU_Password, Clientes.CDU_idCartaoCliente, Clientes.CDU_Subscribed, pontos.Pontos 
                                                     FROM 
 	                                                    (SELECT ISNULL(SUM(t.CDU_Pontos),0) AS Pontos FROM Clientes, TDU_TransacaoPontos t LEFT JOIN TDU_CartaoCliente c
 	                                                    ON t.CDU_idCartaoCliente = c.CDU_idCartaoCliente
 	                                                    WHERE Clientes.Cliente = '" + id + @"'
 	                                                    AND Clientes.CDU_idCartaoCliente = c.CDU_idCartaoCliente) pontos, Clientes
                                                     WHERE Clientes.Cliente = '" + id + @"'
-                                                    GROUP BY Clientes.Cliente, Clientes.nome, Clientes.NumContrib, Clientes.Moeda, Clientes.CDU_Email, Clientes.CDU_Password, Clientes.CDU_idCartaoCliente, pontos.Pontos");
+                                                    GROUP BY Clientes.Cliente, Clientes.nome, Clientes.NumContrib, Clientes.Moeda, Clientes.CDU_Email, Clientes.CDU_Password, Clientes.CDU_idCartaoCliente,Clientes.CDU_Subscribed, pontos.Pontos");
 
 
                 while (!objList.NoFim())
@@ -200,7 +201,9 @@ namespace FirstREST.Lib_Primavera
                         cli.CDU_Password = objList.Valor("CDU_Password");
                         cli.CDU_idCartaoCliente = objList.Valor("CDU_idCartaoCliente");
                         cli.Pontos = objList.Valor("Pontos");
-
+                        string val = Convert.ToString(objList.Valor("CDU_Subscribed"));
+                        if (val == "") cli.CDU_Subscribed = false;
+                        else cli.CDU_Subscribed = Convert.ToBoolean(val);
                         if (cli.Pontos > 0)
                         {
                             objList2 = PriEngine.Engine.Consulta(@"SELECT TOP 1 transacoes.CDU_Pontos, (transacoes.CDU_DataExpiracao) As DataExpiracao FROM
@@ -311,6 +314,143 @@ namespace FirstREST.Lib_Primavera
 
         }
 
+        public static Lib_Primavera.Model.RespostaErro UpdFamilia(Lib_Primavera.Model.Familia familia)
+        {
+
+
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            ErpBS objMotor = new ErpBS();
+
+            GcpBEFamilia objFam = new GcpBEFamilia();
+
+            try
+            {
+
+                if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
+                {
+
+
+                    if (PriEngine.Engine.Comercial.Familias.Existe(familia.NomeFamilia) == false)
+                    {
+                        erro.Erro = 1;
+                        erro.Descricao = "A familia nao existe";
+                        return erro;
+                    }
+                    else
+                    {
+                        objFam = PriEngine.Engine.Comercial.Familias.Edita(familia.NomeFamilia);
+                        objFam.set_EmModoEdicao(true);
+
+                        PriEngine.Engine.Comercial.Familias.ActualizaValorAtributo(familia.NomeFamilia, "Descricao", familia.DescriFamilia);
+                        PriEngine.Engine.Comercial.Familias.ActualizaValorAtributo(familia.NomeFamilia, "CDU_Desconto", familia.DescFamilia);
+
+
+                        erro.Erro = 0;
+                        erro.Descricao = "Sucesso";
+                        return erro;
+                    }
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir a empresa";
+                    return erro;
+
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+
+        }
+
+        public static Lib_Primavera.Model.RespostaErro UpdDescontosPontos(Lib_Primavera.Model.Desconto[] descontos)
+        {
+
+            StdBELista objList;
+
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            ErpBS objMotor = new ErpBS();
+
+            GcpBEFamilia objFam = new GcpBEFamilia();
+
+            try
+            {
+
+                if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
+                {
+
+                    objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_TipoDesconto");
+                    
+                    while (!objList.NoFim())
+                    {
+                        StdBECamposChave x = new StdBECamposChave();
+                        x.AddCampoChave("CDU_idTipoDesconto", objList.Valor("CDU_idTipoDesconto"));
+                        PriEngine.Engine.TabelasUtilizador.Remove("TDU_TipoDesconto",x);
+                      
+
+                        objList.Seguinte();
+
+                    }
+                     
+
+                    int count = 0;
+                    foreach (Lib_Primavera.Model.Desconto d in descontos)
+                    {
+                        StdBERegistoUtil registoUtil = new StdBERegistoUtil();
+                        StdBECampos campos = new StdBECampos();
+                        StdBECampo campoCDU_idTipoDesconto = new StdBECampo();
+                        StdBECampo campoCDU_TipoDesconto = new StdBECampo();
+                        StdBECampo campoCDU_Pontos = new StdBECampo();
+
+                        campoCDU_idTipoDesconto.Nome = "CDU_idTipoDesconto";
+                        campoCDU_idTipoDesconto.Valor = Convert.ToString(count);
+
+                        campoCDU_TipoDesconto.Nome = "CDU_Desconto";
+                        campoCDU_TipoDesconto.Valor = Convert.ToString(d.desconto);
+
+                        campoCDU_Pontos.Nome = "CDU_Pontos";
+                        campoCDU_Pontos.Valor = Convert.ToString(d.pontos);
+
+                        campos.Insere(campoCDU_idTipoDesconto);
+                        campos.Insere(campoCDU_TipoDesconto);
+                        campos.Insere(campoCDU_Pontos);
+
+                        registoUtil.set_Campos(campos);
+
+                        PriEngine.Engine.TabelasUtilizador.Actualiza("TDU_TipoDesconto", registoUtil);
+
+                        count++;
+                    }
+
+
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir a empresa";
+                    return erro;
+
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+
+        }
 
         public static Lib_Primavera.Model.RespostaErro DelCliente(string codCliente)
         {
@@ -993,6 +1133,44 @@ namespace FirstREST.Lib_Primavera
                 return null;
         }
 
+        //------------------------------------ LISTA FAMILIAS
+
+        public static List<Model.Familia> ListaFamilias()
+        {
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+
+            Model.Familia fam = new Model.Familia();
+            List<Model.Familia> listFamilias = new List<Model.Familia>();
+
+
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT Familia, Descricao, CDU_Desconto FROM Familias");
+
+                while (!objList.NoFim())
+                {
+                    fam = new Model.Familia();
+                    fam.NomeFamilia = objList.Valor("Familia");
+                    fam.DescriFamilia = objList.Valor("Descricao");
+
+                    String CDU_desconto = System.Convert.ToString(objList.Valor("CDU_Desconto"));
+                    if (CDU_desconto == "" || CDU_desconto == null) fam.DescFamilia = 0;
+                    else fam.DescFamilia = objList.Valor("CDU_Desconto");
+                   
+
+                    listFamilias.Add(fam);
+                    objList.Seguinte();
+
+                }
+
+                return listFamilias;
+            }
+            else
+                return null;
+        }
+
         //------------------------------------ LISTA DESCONTOS COM PONTOS
 
         public static List<Model.Desconto> ListaDescontosPontos()
@@ -1026,5 +1204,37 @@ namespace FirstREST.Lib_Primavera
                 return null;
         }
 
+        //------------------------------------ LISTA Funcionarios
+
+        public static List<Model.Funcionario> ListaFuncionarios()
+        {
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+
+            Model.Funcionario desc = new Model.Funcionario();
+            List<Model.Funcionario> list = new List<Model.Funcionario>();
+
+
+            if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_Funcionario");
+
+                while (!objList.NoFim())
+                {
+                    desc = new Model.Funcionario();
+                    desc.username = objList.Valor("CDU_username");
+                    desc.password = objList.Valor("CDU_password");
+
+                    list.Add(desc);
+                    objList.Seguinte();
+
+                }
+
+                return list;
+            }
+            else
+                return null;
+        }
     }
 }
