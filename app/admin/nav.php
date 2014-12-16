@@ -17,7 +17,7 @@
                 <li class="dropdown" style="text-align:center">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gestão de descontos <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li style="text-align:center"<a href="descontos_diretos.php">Descontos Directos (Famílias)</a>
+                        <li style="text-align:center"><a href="descontos_diretos.php">Descontos Directos (Famílias)</a>
                         </li>
                         <li style="text-align:center"><a href="descontos_pontos.php">Descontos Por Pontos</a>
                         </li>
