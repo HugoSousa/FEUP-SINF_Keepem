@@ -289,7 +289,7 @@ include "check_login.php";
                             </thead>
                             <tbody>
                                 <tr id='addr0' data-id="0" class="hidden">
-                                    <td data-name="cod">
+                                    <td data-name="cod" >
                                         <div class="value text-center"></div>
                                         <input type="text" name='cod'  placeholder='Código' class="form-control req_string nochange" style="display:none" disabled/>
                                     </td>
@@ -306,7 +306,7 @@ include "check_login.php";
                                     <td data-name="ed">
 
                                         <div class="row text-center" >
-                                            <p class="edit-button"><button  class='btn btn-info btn-sm row-edit'><span class="glyphicon glyphicon-pencil"></span></button></p>
+                                            <p class="edit-button" style="margin-bottom:0px"><button  class='btn btn-info btn-sm row-edit'><span class="glyphicon glyphicon-pencil"></span></button></p>
                                             <p class="save-button" style="display:none"><button  class='btn btn-success btn-sm row-save'><span class="glyphicon glyphicon-ok"></span></button></p>
 
                                         </div>

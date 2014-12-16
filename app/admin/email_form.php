@@ -182,12 +182,12 @@ $default_subject_email = "Informações sobre novas oportunidades para clientes 
                             success: function (resp) {
                                 total_emails = 0;
                                 resp.forEach(function (client) {
-                                    if (client.CDU_Email != "" && client.CDU_idCartaoCliente) total_emails++;
+                                    if (client.CDU_Email != "" && client.CDU_idCartaoCliente && client.CDU_Subscribed) total_emails++;
                                 });
                                 updateProgressBar(emails_sent, total_emails);
                                 if (total_emails != 0)
                                     resp.forEach(function (client) {
-                                        if (client.CDU_Email != "" && client.CDU_idCartaoCliente)
+                                        if (client.CDU_Email != "" && client.CDU_idCartaoCliente && client.CDU_Subscribed)
                                             $.ajax({
                                                 type: "GET",
                                                 url: "http://localhost:49822/api/clientes/" +  client.CodCliente ,

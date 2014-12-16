@@ -1215,7 +1215,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_Funcionarios");
+                objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_Funcionario");
 
                 while (!objList.NoFim())
                 {

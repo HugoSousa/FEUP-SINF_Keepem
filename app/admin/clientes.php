@@ -47,7 +47,7 @@ include "check_login.php";
                                         success: function (resp) {
 
                                             console.log(resp);
-                                            add_new_row([resp.CodCliente,resp.CDU_idCartaoCliente, resp.NomeCliente,  resp.CDU_Email,resp.Pontos],false);
+                                            add_new_row([resp.CodCliente,resp.CDU_idCartaoCliente, resp.NomeCliente,  resp.CDU_Email,resp.Pontos, resp.CDU_Subscribed],false);
                                             current_clients++;
                                             if (total_clients == current_clients) {
                                                 $('.loading_icon').hide();
@@ -226,6 +226,10 @@ include "check_login.php";
                                         Pontos
                                     </th>
 
+                                    <th class="text-center">
+                                        Subscribed
+                                    </th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -249,7 +253,10 @@ include "check_login.php";
                                         <div class="value text-center"></div>
 
                                     </td>
+                                    <td data-name="Subscribed">
+                                        <div class="value text-center"></div>
 
+                                    </td>
 
 
                                 </tr>

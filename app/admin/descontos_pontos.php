@@ -355,15 +355,15 @@ include "check_login.php";
                                     <td data-name="ed">
 
                                         <div class="row text-center" >
-                                            <p class="edit-button"><button  class='btn btn-info btn-sm row-edit'><span class="glyphicon glyphicon-pencil"></span></button></p>
-                                            <p class="save-button" style="display:none"><button  class='btn btn-success btn-sm row-save'><span class="glyphicon glyphicon-ok"></span></button></p>
+                                            <p class="edit-button" style="margin-bottom:0"><button  class='btn btn-info btn-sm row-edit'><span class="glyphicon glyphicon-pencil"></span></button></p>
+                                            <p class="save-button" style="display:none; margin-bottom:0"><button  class='btn btn-success btn-sm row-save'><span class="glyphicon glyphicon-ok"></span></button></p>
 
                                         </div>
 
                                     </td>
                                     <td data-name="del">
                                         <div class="row text-center" >
-                                            <p> <button  class='btn btn-danger btn-sm row-remove'><span class="glyphicon glyphicon-trash"></span></button></p>
+                                            <p style=" margin-bottom:0"> <button  class='btn btn-danger btn-sm row-remove'><span class="glyphicon glyphicon-trash"></span></button></p>
                                         </div>
                                     </td>
 
