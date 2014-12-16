@@ -23,12 +23,14 @@
                         </li>
                     </ul>
                 </li>
-                <li style="text-align:center"><a href="clientes.php">Clientes Fidelizados</a></li>
-				<li style="text-align:center"><?php if ($logged) { ?>
-            <button type="button" id="logout" class="btn btn-default navbar-btn navbar-right" style="text-align:center">Log out</button>
-                <?php } ?>
-				</li>
+                <li style="text-align:center"><a href="clientes.php">Clientes Fidelizados</a></li>	
             </ul>
+			<ul>
+				<li style="text-align:center"><?php if ($logged) { ?>
+				<button type="button" id="logout" class="btn btn-default navbar-btn navbar-right" style="text-align:center">Log out</button>
+					<?php } ?>
+				</li>
+			</ul>
             
 		</div>
                 <!-- /.navbar-collapse -->
