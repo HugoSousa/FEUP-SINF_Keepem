@@ -2,8 +2,11 @@ var familias_desconto = [];
 var produtos_familia = [];
 $(document).ready(function () {
 	$(document).on('click', '#dropdown_list li a', function() {
-		var familia_selecionada = $(this).html();
-			$('#dropdown_title').html(familia_selecionada);
+		var familia_selecionada = $(this).find('span').html();
+		var descricao_familia_selecionada = $(this).clone().children().remove().end().text(); //get text of <a> only, without children nodes
+		console.log(familia_selecionada);
+		console.log(descricao_familia_selecionada);
+		$('#dropdown_title').html(descricao_familia_selecionada);
 		
 		$('#desconto_direto_familia').text(familias_desconto[familia_selecionada]);
 			$('.show-category').removeClass('hide');
@@ -59,7 +62,7 @@ $(document).ready(function () {
         success: function (resp) {
 			
 			for(var i = 0; i < resp.length; i++){
-				$('#dropdown_list').append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#">' + resp[i].NomeFamilia + '</a></li>');
+				$('#dropdown_list').append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#">' + resp[i].DescriFamilia + ' - ' + resp[i].DescFamilia + '% <span style="display:none">' + resp[i].NomeFamilia + '</span></a></li>');
 				familias_desconto[resp[i].NomeFamilia] = resp[i].DescFamilia;
 			}
 			

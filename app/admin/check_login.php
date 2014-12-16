@@ -7,7 +7,7 @@ else
     $error = false;
 
 if (!$logged && !isset($disc_login)) {
-    $_SESSION['error'] = "Inicie sessão para aceder ás funcionalidades de administrador";
+    $_SESSION['error'] = "Inicie sessão para aceder às funcionalidades de administrador";
     $error = true;
     header("location: index.php");
 }

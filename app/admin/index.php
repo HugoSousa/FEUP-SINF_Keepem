@@ -71,19 +71,19 @@ include "check_login.php";
                 <div class="col-sm-offset-1 col-sm-10  list-group">
                     <a href="email_form.php" class="list-group-item">
                         <h3 class="text-info list-group-item-heading"> <strong>Newsletter</strong></h3>
-                        <p class="list-group-item-text ">Seccão onde pode editar e enviar email para todos os clientes subscritos à newsletter</p>
+                        <p class="list-group-item-text ">Seccão onde pode editar e enviar email para todos os clientes subscritos à newsletter.</p>
                     </a>
                     <a href="descontos_diretos.php" class="list-group-item ">
                         <h3 class="list-group-item-heading"> <strong>Descontos Diretos</strong></h3>
-                        <p class="list-group-item-text">Edite as família que têm desconto direto em cartão cliente em todos os produtos correspondentes.</p>
+                        <p class="list-group-item-text">Edite as famílias que têm desconto direto em cartão cliente em todos os produtos correspondentes.</p>
                     </a>
                     <a href="descontos_pontos.php" class="list-group-item">
                         <h3 class="list-group-item-heading"> <strong>Descontos por Pontos</strong></h3>
-                        <p class="list-group-item-text">Modifique os pontos necessários para aplicar um desconto completo sobre uma compra</p>
+                        <p class="list-group-item-text">Modifique os pontos necessários para aplicar um desconto completo sobre uma compra.</p>
                     </a>
                     <a href="clientes.php" class="list-group-item">
                         <h3 class="list-group-item-heading"> <strong>Clientes</strong></h3>
-                        <p class="list-group-item-text">Visualize os actuais clientes fidelizados</p>
+                        <p class="list-group-item-text">Visualize os actuais clientes fidelizados.</p>
                     </a>
                 </div>
             </div>

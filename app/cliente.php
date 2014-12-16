@@ -26,18 +26,9 @@
 
     <div class="container">
 
-		<div class="page-header">
+		<div class="page-header" style="margin-bottom:100px">
             <h3>O Meu Perfil <small>Cliente</small></h3>
         </div>
-		
-		<div style="text-align:center; margin-top:50; margin-bottom:50">
-			<h3>Newsletter</h3>
-			<div class="btn-group" role="group" id="subscribe_group">
-			  <button type="button" class="btn btn-default" id="subscribe_button">Subscribe</button>
-			  <button type="button" class="btn btn-default" id="unsubscribe_button">Unsubscribe</button>
-			</div>
-		</div>
-		
 
         <h4><span style="display: inline-block; width:20%">Nome do Cliente:</span><span id="nomeCliente" class="label label-primary"></span></h4>
         <br>
@@ -47,6 +38,13 @@
         <br>
         <h4 id="pontosH4"><span style="display: inline-block; width:20%">Pontos:</span><span id="pontos" class="label label-primary"></span></h4>
 		
+		<div style="text-align:center; margin-top:100; margin-bottom:50">
+			<h4>Newsletter</h4>
+			<div class="btn-group" role="group" id="subscribe_group">
+			  <button type="button" class="btn btn-default" id="subscribe_button">Subscribe</button>
+			  <button type="button" class="btn btn-default" id="unsubscribe_button">Unsubscribe</button>
+			</div>
+		</div>
 		
     </div>
 </body>
