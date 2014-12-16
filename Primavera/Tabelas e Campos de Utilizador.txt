@@ -7,6 +7,7 @@
 --CDU_idCartaoCliente(nvarchar, 20);
 --CDU_Password(nvarchar, 20);
 --CDU_Email(nvarchar, 20);
+--CDU_Subscribed (bool, default-false)
 
 -CabecDoc
 --CDU_DescontoFidelizacao (real);

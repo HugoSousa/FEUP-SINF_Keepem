@@ -150,7 +150,9 @@ namespace FirstREST.Lib_Primavera
                     cli.CDU_Email = objList.Valor("CDU_Email");
                     cli.CDU_Password = objList.Valor("CDU_Password");
                     cli.CDU_idCartaoCliente = objList.Valor("CDU_idCartaoCliente");
-
+                    string val = Convert.ToString(objList.Valor("CDU_Subscribed"));
+                    if (val == "") cli.CDU_Subscribed = false;
+                    else cli.CDU_Subscribed = Convert.ToBoolean(objList.Valor("CDU_Subscribed"));
                     listClientes.Add(cli);
                     objList.Seguinte();
 
@@ -175,14 +177,14 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
                 //objList = PriEngine.Engine.Consulta("SELECT *, NumContrib as NumContribuinte FROM CLIENTES");
-                objList = PriEngine.Engine.Consulta(@"SELECT Clientes.Cliente, Clientes.nome, Clientes.NumContrib AS NumContribuinte, Clientes.Moeda, Clientes.CDU_Email, Clientes.CDU_Password, Clientes.CDU_idCartaoCliente, pontos.Pontos 
+                objList = PriEngine.Engine.Consulta(@"SELECT Clientes.Cliente, Clientes.nome, Clientes.NumContrib AS NumContribuinte, Clientes.Moeda, Clientes.CDU_Email, Clientes.CDU_Password, Clientes.CDU_idCartaoCliente, Clientes.CDU_Subscribed, pontos.Pontos 
                                                     FROM 
 	                                                    (SELECT ISNULL(SUM(t.CDU_Pontos),0) AS Pontos FROM Clientes, TDU_TransacaoPontos t LEFT JOIN TDU_CartaoCliente c
 	                                                    ON t.CDU_idCartaoCliente = c.CDU_idCartaoCliente
 	                                                    WHERE Clientes.Cliente = '" + id + @"'
 	                                                    AND Clientes.CDU_idCartaoCliente = c.CDU_idCartaoCliente) pontos, Clientes
                                                     WHERE Clientes.Cliente = '" + id + @"'
-                                                    GROUP BY Clientes.Cliente, Clientes.nome, Clientes.NumContrib, Clientes.Moeda, Clientes.CDU_Email, Clientes.CDU_Password, Clientes.CDU_idCartaoCliente, pontos.Pontos");
+                                                    GROUP BY Clientes.Cliente, Clientes.nome, Clientes.NumContrib, Clientes.Moeda, Clientes.CDU_Email, Clientes.CDU_Password, Clientes.CDU_idCartaoCliente,Clientes.CDU_Subscribed, pontos.Pontos");
 
 
                 while (!objList.NoFim())
@@ -199,7 +201,9 @@ namespace FirstREST.Lib_Primavera
                         cli.CDU_Password = objList.Valor("CDU_Password");
                         cli.CDU_idCartaoCliente = objList.Valor("CDU_idCartaoCliente");
                         cli.Pontos = objList.Valor("Pontos");
-
+                        string val = Convert.ToString(objList.Valor("CDU_Subscribed"));
+                        if (val == "") cli.CDU_Subscribed = false;
+                        else cli.CDU_Subscribed = Convert.ToBoolean(val);
                         if (cli.Pontos > 0)
                         {
                             objList2 = PriEngine.Engine.Consulta(@"SELECT TOP 1 transacoes.CDU_Pontos, (transacoes.CDU_DataExpiracao) As DataExpiracao FROM
@@ -1211,7 +1215,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany("PRIBELA", "", "") == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_Funcionario");
+                objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_Funcionarios");
 
                 while (!objList.NoFim())
                 {
