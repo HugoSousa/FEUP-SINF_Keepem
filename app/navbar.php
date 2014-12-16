@@ -27,6 +27,12 @@
             $("#logout").click(function () {
                 window.location.href = "logout.php";
             });
+			
+			$(".nav a").on("click", function(){
+				console.log("A");
+			   //$(".nav").find(".active").removeClass("active");
+			   //$(this).parent().addClass("active");
+			});
 
         });
     </script>
@@ -34,6 +40,7 @@
 
 <body>
     <nav class="navbar navbar-default" role="navigation">
+	
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -42,7 +49,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-                <a class="navbar-brand">Sistema de Fidelização de Clientes</a>
+                <a class="navbar-brand">Keep'em</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

@@ -12,6 +12,7 @@
                     <th>Num. Fatura</th>
                     <th>Data</th>
                     <th class="nosort">Pontos Usados</th>
+					<th class="nosort">Preço Inicial</th>
 					<th class="nosort">Preço Final</th>
 					<th class="nosort">Poupança Fidelização</th>
                 </tr>

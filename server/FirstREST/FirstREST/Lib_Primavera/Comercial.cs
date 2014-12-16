@@ -247,7 +247,7 @@ namespace FirstREST.Lib_Primavera
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
             ErpBS objMotor = new ErpBS();
 
-            GcpBECliente objCli = new GcpBECliente();
+           // GcpBECliente objCli = new GcpBECliente();
 
             try
             {
@@ -264,24 +264,27 @@ namespace FirstREST.Lib_Primavera
                     }
                     else
                     {
+                        /*
                         Model.CartaoCliente cartaoCliente = novoCartaoCliente();
                         
                         
                         objCli = PriEngine.Engine.Comercial.Clientes.Edita(cliente.CodCliente);
                         objCli.set_EmModoEdicao(true);
 
-                        /*
+                        
                         objCli.set_Nome(cliente.NomeCliente);
                         objCli.set_NumContribuinte(cliente.NumContribuinte);
                         objCli.set_Moeda(cliente.Moeda);
                         
 
                         PriEngine.Engine.Comercial.Clientes.Actualiza(objCli);
-                        
-
-                        PriEngine.Engine.Comercial.Clientes.ActualizaValorAtributo(cliente.CodCliente, "CDU_Password", cli.CDU_Password);
                         */
-                        PriEngine.Engine.Comercial.Clientes.ActualizaValorAtributo(cliente.CodCliente, "CDU_idCartaoCliente", cartaoCliente.CDU_idCartaoCliente);
+                        
+                        if(cliente.CDU_Subscribed)
+                            PriEngine.Engine.Comercial.Clientes.ActualizaValorAtributo(cliente.CodCliente, "CDU_Subscribed", 1);
+                        else
+                            PriEngine.Engine.Comercial.Clientes.ActualizaValorAtributo(cliente.CodCliente, "CDU_Subscribed", 0);
+                        
 
 
                         erro.Erro = 0;

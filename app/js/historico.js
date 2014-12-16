@@ -25,6 +25,9 @@ $(document).ready(function () {
 				"data": "PontosUsados"
 			},
 			{
+				"data": "PrecoInicial"
+			},
+			{
 				"data": "PrecoFinal"
 			},
 			{
@@ -50,11 +53,16 @@ $(document).ready(function () {
 				
 				resp[i].Data = datasplit[0]
 				//resp[i].Poupanca = Math.abs((resp[i].PrecoFinal - resp[i].PrecoInicial).toFixed(2));
+				
 				resp[i].Poupanca = resp[i].DescontoFidelizacao;
 				for(var j=0; j < resp[i].LinhasDoc.length; j++){
 					resp[i].Poupanca += resp[i].LinhasDoc[j].DescontoFidelizacao;
 				}
+				
+				resp[i].PrecoInicial = (resp[i].PrecoFinal + resp[i].Poupanca).toFixed(2);
+				resp[i].PrecoFinal = resp[i].PrecoFinal.toFixed(2);
 				resp[i].Poupanca = resp[i].Poupanca.toFixed(2);
+				
 				//console.log(num);
 				//console.log(data);
 				

@@ -48,7 +48,7 @@ $(document).ready(function () {
 				else{
 					//fatura e deste cliente
 					console.log(resp);
-					$("#total_fatura").text(resp.PrecoFinal);
+					$("#total_fatura").text(resp.PrecoFinal.toFixed(2));
 					
 					for(var i=0; i < resp.LinhasDoc.length; i++){
 					

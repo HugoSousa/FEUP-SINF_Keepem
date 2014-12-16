@@ -5,6 +5,45 @@ $(document).ready(function () {
     $("#criarCartaoCliente").hide();
     $("#pontosH4").hide();
 
+	
+	$("#subscribe_group > .btn").click(function(e){
+		if( ! $(this).hasClass('active')){	
+		
+			var clicked_button = $(this);
+		
+			console.log("clicked");
+			var subscribe_data;
+			if(e.target.id == 'subscribe_button')
+				subscribe_data = true;
+			else
+				subscribe_data = false;
+				
+			$.ajax({
+				type: "PUT",
+				url: "http://localhost:49822/api/clientes/1",
+				dataType: "json",
+				contentType: "application/json",
+				data: JSON.stringify({
+					"CodCliente": codCliente,
+					"CDU_Subscribed": subscribe_data
+				}),
+				success: function (resp) {
+					
+					clicked_button.addClass("active").siblings().removeClass("active");
+				},
+				error: function (e) {
+					console.log("A");
+					$(this).removeClass("active");
+					alert("Erro. Não foi possível enviar a sua alteração para o servidor.");
+				}	
+			});
+		}
+	});
+		
+		
+		
+		
+
     $.ajax({
         type: "GET",
         url: "http://localhost:49822/api/clientes/" + codCliente,
@@ -13,16 +52,16 @@ $(document).ready(function () {
 
             $("#nomeCliente").append(resp.NomeCliente);
             $("#numContribuinte").append(resp.NumContribuinte);
-
-            if (resp.CDU_idCartaoCliente == null || resp.CDU_idCartaoCliente == "null") {
-                $("#cartaoClienteH4").show();
-                $("#criarCartaoCliente").show();
-            } else {
-                $("#cartaoClienteH4").show();
-                $("#cartaoCliente").append(resp.CDU_idCartaoCliente);
-                $("#pontosH4").show();
-                $("#pontos").append(resp.Pontos);
-            }
+            
+			$("#cartaoClienteH4").show();
+			$("#cartaoCliente").append(resp.CDU_idCartaoCliente);
+			$("#pontosH4").show();
+			$("#pontos").append(resp.Pontos);
+			if(resp.CDU_Subscribed)
+				$('#subscribe_button').addClass('active');
+			else
+				$('#unsubscribe_button').addClass('active');
+				
 
         },
         error: function (e) {
@@ -30,30 +69,13 @@ $(document).ready(function () {
         }
     });
 
-    $("#criarCartaoCliente").click(function () {
-        $.ajax({
-            type: "PUT",
-            url: "http://localhost:49822/api/clientes/1",
-            data: JSON.stringify({
-                "CodCliente": codCliente
-            }),
-            contentType: "application/json",
-            dataType: "json",
-            success: function (resp) {
-                alert("Cartão de cliente criado com sucesso!");
-                
-                window.location.href = "cliente.php?codCliente=" + codCliente;
-            },
-            error: function (e) {
-                alert("Erro ao criar cartão de cliente!");
-            }
-        });
-    });
 
-    function getParameterByName(name) {
+    
+});
+
+function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
             results = regex.exec(location.search);
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
-});

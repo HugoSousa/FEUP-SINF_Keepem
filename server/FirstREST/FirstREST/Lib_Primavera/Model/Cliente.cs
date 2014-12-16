@@ -50,6 +50,12 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public bool CDU_Subscribed
+        {
+            get;
+            set;
+        }
+
         public int Pontos
         {
             get;
