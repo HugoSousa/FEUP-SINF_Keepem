@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="/css/dataTables.bootstrap.css">
 
     <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <title>Keep'em</title>
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery.dataTables.min.js"></script>

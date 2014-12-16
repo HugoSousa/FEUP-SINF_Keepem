@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.php">Gestão de sistema de Fidelização</a>
+            <a class="navbar-brand" href="index.php">Keep'em Administração</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

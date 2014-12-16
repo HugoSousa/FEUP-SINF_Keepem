@@ -11,9 +11,8 @@ include "check_login.php";
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="../../../favicon.ico">
-
-        <title>Envio de NewsLetter</title>
+        <link rel="icon" href="../images/favicon.ico">
+        <title>Keep'em</title>
 
         <link href="../css/bootstrap.min.css" rel="stylesheet">
 

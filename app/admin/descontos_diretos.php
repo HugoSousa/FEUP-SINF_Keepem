@@ -10,10 +10,9 @@ include "check_login.php";
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="../../../favicon.ico">
-
-        <title>Descontos Diretos</title>
-
+        <link rel="icon" href="../images/favicon.ico">
+        <title>Keep'em</title>
+        
         <link href="../css/bootstrap.min.css" rel="stylesheet">
 
         <link rel="stylesheet" href="../css/style.css" type="text/css">
